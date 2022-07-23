@@ -1,0 +1,128 @@
+@import "mixin";
+@import './pop.scss';
+#app {
+  font-size: 14px;
+  background-color: rgb(246, 248, 251);
+  @include app-font()
+}
+.page-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100%);
+}
+.van-tabs__line {
+  background-color: $theme-color;
+  padding: 0px 20px;
+}
+.van-button--mini {
+  padding: 0 0.4rem;
+}
+
+.scroll {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// 遮罩层
+.van-overlay {
+  z-index: 3;
+}
+
+// 自定义必填星号-表单
+.requiredstar {
+  color:#F56C6C; 
+  margin: 0px 4px 0px -8px
+}
+.slotlabel {
+  color: #646566;
+  padding-top: 8px;
+  margin: 0px 14px;
+}
+
+.headerFiex {
+  position: relative;
+}
+
+.my-swipe .van-swipe-item {
+  color: #fff;
+  height: 200px;
+  text-align: center;
+  position: relative;
+}
+
+// 白蓝背景渐变 列表样式 背景
+.listCard-fill-content {
+  height: 2.7rem;
+  width: 100%;
+  padding-left: 0.4rem;
+  position: relative;
+  background: linear-gradient(to bottom right,white, 85%, #69d3ff);
+  background: -webkit-linear-gradient(to bottom right,white, 85%, #69d3ff);
+}
+.listCard-fill-box {
+  position: absolute; // 保证背景图片上的文字清晰
+  width: 90%;
+  height: 100%
+}
+.listCard-fill-title {
+  font-size: 16px;
+}
+.fill-content-item {
+  position: relative;
+}
+.backImgs {
+  position: absolute;
+  left: 0;
+  width: 120px;
+  height: 100%;
+  background-position: center;
+  background: linear-gradient(to left, #FFFFFF, transparent),url('~@/assets/images/backimg.jpeg') no-repeat;
+  opacity: 0.6;
+  // background: url('~@/assets/images/backimg.jpeg') no-repeat;
+  background-size: 120px auto;
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
+}
+
+.backQrcode {
+  position: absolute;
+  transform: translateY(14%);
+  left: 42%;
+  width: 70px;
+  height: 100%;
+  background-position: center;
+  background: linear-gradient(to bottom, #FFFFFF, transparent),url('~@/assets/images/qrcode.jpeg') no-repeat;
+  // background: url('~@/assets/images/qrcode.jpeg') no-repeat;
+  opacity: 0.4;
+  background-size: 70px auto;
+  // -webkit-filter: blur(2px);
+  // -moz-filter: blur(2px);
+  // -o-filter: blur(2px);
+  // -ms-filter: blur(2px);
+  // filter: blur(2px);
+}
+
+.triangle-topright {
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: 0;
+  border-top: 1.9rem solid #5E6A78;
+  border-left: 1.9rem solid transparent; 
+}
+
+.triangle-rotate{
+  position: absolute;
+  top: .3rem;
+  right: 0.35rem;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  font-size: 12px;
+  color: #fff;
+}
+

@@ -1,0 +1,77 @@
+.cardPopup {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100%);
+  overflow-y: hidden;
+  .van-popup__close-icon--top-right {
+    top: 0.2rem;
+  }
+}  
+.popupTitle {
+  font-size: 16px;
+  font-weight: 600;
+  // min-height: 20px;
+}
+.popupTitle, .popupTitle-item {
+  margin: 10px;
+}
+.popupScroll {
+  flex: 1;
+  overflow: auto;
+  margin: 6px;
+  // height: calc(100vh - 100px);
+  /* 增加弹性滚动,解决滚动不流畅的问题 */
+  -webkit-overflow-scrolling: touch;
+} 
+
+.submitbotton {
+  height: 40px;
+  margin: 6px ;
+}
+.cardPopup-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 6px;
+  background: #fafafa;
+  .cardPopup-content-right {
+    width: 64%;
+    .van-cell {
+      background: none;
+    }
+    .van-cell::after {
+      border-bottom: 0.02667rem solid #c8c9cc;
+    }
+  }
+}
+.cardPopup-content-left {
+  position: relative;
+  text-align: center;
+  width: 32%;
+  border: 2px dashed #049ce0;
+  border-radius: 6px;
+  .van-image {
+    width: 110px;
+    height: 140px;
+    margin: 0px;
+  }
+  .upload {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9;
+    opacity: 0;
+    .van-uploader__upload {
+      width: 110px;
+      height: 140px;
+      margin: 0px;
+    }
+  }
+}
+
+.van-field__body{
+  .van-tag {
+    margin-right: 6px;
+  }
+}

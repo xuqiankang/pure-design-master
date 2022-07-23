@@ -1,0 +1,68 @@
+<template>
+    <div class="homepage">
+      <van-nav-bar  title="登录" left-arrow />
+      <div class="content-wrapper">
+        <van-form ref="form" @submit="onSubmit" style="background: #fff">
+          <van-cell-group>
+            <van-field required v-model="loginForm.username" name="username" label="用户名"  placeholder="用户名" :rules="[{ required: true, message: '请输入用户名' }]" />
+            <van-field required v-model="loginForm.password" name="password" label="密码"  placeholder="密码" :rules="[{ required: true, message: '请输入密码' }]"  type="password" />
+          </van-cell-group>
+
+          <van-radio-group v-model="loginForm.radio" style="margin: 10px" required>
+            <van-radio name="1" icon-size="16px">未注册的账号验证后将自动创建账号</van-radio>
+          </van-radio-group>
+
+          <div style="margin: 16px 30px;">
+            <van-button round block type="info" native-type="submit">登录</van-button>
+          </div>
+        </van-form>
+      </div>
+    </div>
+</template>
+<script>
+import { setSessionToken } from "@/utils/uToken";
+import BaseUI from '@/views/components/baseUI'
+export default {
+    extends: BaseUI,
+    name: "login",
+    data() {
+        return {
+          loginForm: {
+            radio: '',
+            username: '',
+            password: ''
+          },
+        }
+    },
+    mounted() {
+    },
+    methods: {
+      onSubmit() {
+        // this.setLoad()
+        // getToken(this.loginForm.username, this.loginForm.password)
+        //   .then(responseData => {
+        //     if(responseData.code == 100) {
+        //       setSessionToken('currentUser', responseData.data)
+        //     } else {
+        //       this.$toast.fail(responseData.msg)
+        //     }
+        //       this.resetLoad()
+        //   })
+        //   .catch(error => {
+        //       this.resetLoad()
+        //   })
+      }
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.container {
+  height: 100%;
+  .content-wrapper {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+  }
+}
+</style>
