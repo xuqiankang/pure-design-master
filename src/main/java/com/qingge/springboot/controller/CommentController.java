@@ -85,8 +85,8 @@ public class CommentController {
             comments.forEach(comment -> {
                 Optional<Comment> pComment = articleComments.stream().filter(c1 -> c1.getId().equals(comment.getPid())).findFirst();  // 找到当前评论的父级
                 pComment.ifPresent((v -> {  // 找到父级评论的用户id和用户昵称，并设置给当前的回复对象
-                    comment.setPUserId(v.getUserId());
-                    comment.setPNickname(v.getNickname());
+                    comment.setpUserId(v.getUserId());
+                    comment.setpNickname(v.getNickname());
                 }));
             });
             origin.setChildren(comments);
