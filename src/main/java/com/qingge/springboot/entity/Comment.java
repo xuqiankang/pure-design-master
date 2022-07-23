@@ -31,7 +31,107 @@ public class Comment implements Serializable {
       @TableId(value = "id", type = IdType.AUTO)
       private Integer id;
 
-      @ApiModelProperty("内容")
+  public static long getSerialVersionUID() {
+    return serialVersionUID;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public Integer getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Integer userId) {
+    this.userId = userId;
+  }
+
+  public String getTime() {
+    return time;
+  }
+
+  public void setTime(String time) {
+    this.time = time;
+  }
+
+  public Integer getPid() {
+    return pid;
+  }
+
+  public void setPid(Integer pid) {
+    this.pid = pid;
+  }
+
+  public String getpNickname() {
+    return pNickname;
+  }
+
+  public void setpNickname(String pNickname) {
+    this.pNickname = pNickname;
+  }
+
+  public Integer getpUserId() {
+    return pUserId;
+  }
+
+  public void setpUserId(Integer pUserId) {
+    this.pUserId = pUserId;
+  }
+
+  public Integer getOriginId() {
+    return originId;
+  }
+
+  public void setOriginId(Integer originId) {
+    this.originId = originId;
+  }
+
+  public Integer getArticleId() {
+    return articleId;
+  }
+
+  public void setArticleId(Integer articleId) {
+    this.articleId = articleId;
+  }
+
+  public String getNickname() {
+    return nickname;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
+  }
+
+  public String getAvatarUrl() {
+    return avatarUrl;
+  }
+
+  public void setAvatarUrl(String avatarUrl) {
+    this.avatarUrl = avatarUrl;
+  }
+
+  public List<Comment> getChildren() {
+    return children;
+  }
+
+  public void setChildren(List<Comment> children) {
+    this.children = children;
+  }
+
+  @ApiModelProperty("内容")
       private String content;
 
       @ApiModelProperty("评论人id")
