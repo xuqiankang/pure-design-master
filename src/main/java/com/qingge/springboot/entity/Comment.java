@@ -12,18 +12,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * <p>
- *
- * </p>
- *
- * @author 青哥哥
- * @since 2022-03-22
- */
 @Getter
 @Setter
-  @TableName("t_comment")
-@ApiModel(value = "Comment对象", description = "")
+@TableName("t_comment")
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
