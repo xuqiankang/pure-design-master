@@ -10,7 +10,7 @@
         </van-swipe>
       </div>
 
-      <div class="scoll">
+      <div class="scroll">
         <div class="swipeBox"   v-if="currentUser.role !== '0'">
           <van-swipe style="height: 100%;" :autoplay="10000" vertical>
             <van-swipe-item>
