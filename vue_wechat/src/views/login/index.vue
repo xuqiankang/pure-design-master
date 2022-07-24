@@ -1,6 +1,6 @@
 <template>
     <div class="homepage">
-      <van-nav-bar  title="登录" left-arrow />
+      <van-nav-bar  title="登录" left-arrow @click-left="goBack" />
       <div class="content-wrapper">
         <van-form ref="form" @submit="onSubmit" style="background: #fff">
           <van-cell-group>
@@ -8,11 +8,15 @@
             <van-field required v-model="loginForm.password" name="password" label="密码"  placeholder="密码" :rules="[{ required: true, message: '请输入密码' }]"  type="password" />
           </van-cell-group>
 
-          <van-radio-group v-model="loginForm.radio" style="margin: 10px" required>
-            <van-radio name="1" icon-size="16px">未注册的账号验证后将自动创建账号</van-radio>
-          </van-radio-group>
+          <van-field name="checkboxGroup" class="radioField" label="" :border="false"  :rules="[{ required: true, message: '请选择' }]">
+            <template #input>
+              <van-radio-group v-model="loginForm.radio" style="margin: 10px" required>
+                <van-radio name="1" icon-size="14px"><span style="color: #747474;">未注册的账号验证后将自动创建账号</span></van-radio>
+              </van-radio-group>
+            </template>
+          </van-field>
 
-          <div style="margin: 16px 30px;">
+          <div style="margin: 10px;">
             <van-button round block type="info" native-type="submit">登录</van-button>
           </div>
         </van-form>
@@ -37,6 +41,9 @@ export default {
     mounted() {
     },
     methods: {
+      goBack() {
+        this.$router.back(-1)
+      },
       onSubmit() {
         // this.setLoad()
         // getToken(this.loginForm.username, this.loginForm.password)
@@ -64,5 +71,8 @@ export default {
     top: 40px;
     width: 100%;
   }
+}
+.radioField {
+  padding: 0;
 }
 </style>

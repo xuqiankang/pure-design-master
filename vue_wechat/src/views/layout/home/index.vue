@@ -19,21 +19,23 @@
               </van-swipe-item>
           </van-swipe>
         </div>
+
         <div class="myCard-not">
-          <van-row gutter="16">
+          <van-row gutter="16"  v-if="currentUser.permission == '0'">
             <van-col :span="12">
               <router-link to="/visitors">
                 <div class="myCardlink-not" :style="{background: '#2A67FE'}">访客预约</div>
               </router-link>
             </van-col>
 
-              <van-col :span="12">
-                <router-link :to="{path:'myReservation',query:{'vstPersonnalId':'953894111679987775'}}">
-                  <div class="myCardlink-not" :style="{background: '#F9C95E'}">我的预约</div>
-                </router-link>
-              </van-col>
+            <van-col :span="12">
+              <router-link to="">
+                <div class="myCardlink-not" :style="{background: '#F9C95E'}">我的预约</div>
+              </router-link>
+            </van-col>
+          </van-row>
 
-
+          <van-row gutter="16"  v-if="currentUser.permission == '1'">
             <van-col :span="12" >
               <router-link to="/myVisitors">
                 <div class="myCardlink-not" :style="{background: '#2bc107'}">我的来访</div>
@@ -67,14 +69,7 @@ export default {
         { imgUrl: require('@/assets/images/banner3.jpeg') },
         { imgUrl: require('@/assets/images/banner1.jpeg') },
         { imgUrl: require('@/assets/images/banner2.jpeg') }
-      ],
-      user: {
-        photo: null,
-        name: '老王头',
-        phone: '15234343434',
-        customerName: '123',
-        permission: 'user',
-      },
+      ]
     }
   },
   created() {

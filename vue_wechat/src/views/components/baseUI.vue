@@ -21,7 +21,7 @@ export default {
         name: '老王头',
         phone: '15234343434',
         customerName: '123',
-        permission: 'user',
+        permission: '0',
       }
   },
   methods: {

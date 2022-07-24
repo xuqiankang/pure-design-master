@@ -22,10 +22,6 @@
           >
             <div v-for="(reservationItem,index) in reservationList" :key="index" class="listCard-fill">
               <div class="listCard-fill-content" @click="openQrcode(reservationItem)">
-                <stateType :row="reservationItem" />
-
-                <div class="backQrcode" v-if="reservationItem.state == '002'"></div>
-
                 <div class="listCard-fill-box">
                   <van-row type="flex" align="center" style="height: 100%;">
                     <van-col :span="16">
@@ -51,13 +47,11 @@
 </template>
 
 <script>
-import stateType from '@/views/components/stateType.vue'
 import myqrcodePop from './components/myqrcodePop.vue'
 export default {
   name: 'myReservation',
   components: {
     myqrcodePop,
-    stateType
   },
   data() {
     return {
@@ -90,10 +84,7 @@ export default {
   },
   created() {
     this.onSearch()
-    console.log(this.$route.query.vstPersonnalId,"==============");
     this.search.params = [{'columnName':'vst_personnal_id', 'queryType': '=', 'value': this.$route.query.vstPersonnalId}]
-    console.log( this.search,"==========");
-
   },
   methods: {
     myqrcodePopClose() {

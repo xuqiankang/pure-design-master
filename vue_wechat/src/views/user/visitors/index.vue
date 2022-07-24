@@ -5,7 +5,7 @@
     <div class="scroll">
       <van-form @submit="onSubmit">
           <div class="slotlabel">被访公司</div>
-          <van-field readonly clickable name="picker" :value="bizFormModel.beVisitedCompany.name" placeholder="请选择被访公司" @click="showbeVisitCompany = true" />
+          <van-field readonly clickable name="picker" :value="bizFormModel.company.name" placeholder="请选择被访公司" @click="showbeVisitCompany = true" />
           <van-popup v-model="showbeVisitCompany" position="bottom">
             <van-picker
               :default-index="0"
@@ -18,10 +18,18 @@
           </van-popup>
 
           <div class="slotlabel"><span class="requiredstar">*</span>被访人员</div>
+          <van-field readonly clickable name="picker" :value="bizFormModel.adminName" placeholder="请选择被访公司" @click="showbeVisitCompany = true" />
           <van-field v-model="bizFormModel.beVisitedPerson"  name="被访人员姓名" placeholder="请输入被访人员姓名" :rules="[{ required: true, message: '' }]" />
-
-          <div class="slotlabel"><span class="requiredstar">*</span>被访人员联系电话</div>
-          <van-field v-model="bizFormModel.beVisitedPhone" type="tel" name="被访人员联系电话" placeholder="请输入被访人员联系电话" :rules="[{ required: true, message: '' }]" />
+          <van-popup v-model="showbeVisitCompany" position="bottom">
+            <van-picker
+              :default-index="0"
+              value-key="name"
+              show-toolbar
+              :columns="companyList"
+              @confirm="onConfirmBeVisitedCompany"
+              @cancel="showbeVisitCompany = false"
+            />
+          </van-popup>
 
           <div class="slotlabel"  ><span class="requiredstar">*</span>访客姓名</div>
           <van-field  @click="visitorPopShow = true" readonly v-model="bizFormModel.visitorinformation.name" clearable name="picker" placeholder="点击添加访客姓名" :rules="[{ required: true, message: '' }]"  >
@@ -59,7 +67,6 @@
 
           <div class="slotlabel"><span class="requiredstar">*</span>到访日期</div>
           <van-field readonly clickable name="calendar" :value="bizFormModel.visitorDate" placeholder="点击选择日期" :rules="[{ required: true, message: '' }]" @click="showVisitorDate = true"  />
-          <!-- <van-calendar v-model="showVisitorDate" @confirm="onConfirmVisitorDate" />    -->
 
           <div class="slotlabel">车牌号</div>
           <van-field @click="plateNumberShow = true" readonly  clearable name="picker" placeholder="点击添加车牌号" :rules="[{ required: false, message: '' }]"  >
@@ -90,7 +97,7 @@
             </template>
           </van-field>
           <div style="margin: 16px;">
-            <van-button type="info" block native-type="submit"> 确定 </van-button>
+            <van-button round block type="info" native-type="submit">提交</van-button>
           </div>
       </van-form>
     </div>
@@ -166,13 +173,11 @@ export default {
     },
     initFormModel(This) {
       return {
-        'beVisitedCompany': {     // 被访公司名称
+        'company': {     // 被访公司名称
           'id': 11,
           'name': 'xxx管理有限公司1',
         },
-        'beVisitedPerson': '', // 被访问人员
-        'beVisitedPhone': '', // 被访问人员电话
-
+        'person': '', // 被访问人员
         'visitorinformation': {
           'name': '', // 来访人员姓名
           'IDnumber': '', 

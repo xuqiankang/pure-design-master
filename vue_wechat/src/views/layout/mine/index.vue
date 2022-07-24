@@ -9,21 +9,21 @@
                 <van-col :span="8">
                   <div class="avatar">
                     <div class="avatar-icon" >
-                      <van-icon name="plus" size="30" color="#2A67FE"/>
+                      <van-icon name="contact" size="50" />
                     </div>
                   </div>
                 </van-col>
 
                 <van-col :span="16">
-                  <p>{{user.name}}</p>
-                  <p>{{user.phone}}</p>
-                  <p>{{user.customerName}}</p>
+                  <p>{{currentUser.name}}</p>
+                  <p>{{currentUser.phone}}</p>
+                  <p>{{currentUser.customerName}}</p>
                 </van-col>
             </van-row>
             <div class="homepage-qr">
-              <div class="homepage-tag" v-if="user.permission == '2'">访客</div>
-              <div class="homepage-tag" v-if="user.permission == '1'">公司管理员</div>
-              <div class="homepage-tag" v-if="user.permission == '0'">超级管理员</div>
+              <div class="homepage-tag" v-if="currentUser.permission == '2'">访客</div>
+              <div class="homepage-tag" v-if="currentUser.permission == '1'">公司管理员</div>
+              <div class="homepage-tag" v-if="currentUser.permission == '0'">超级管理员</div>
               <van-image fit="cover" :src="qr" />
             </div>
           </div>
@@ -31,12 +31,10 @@
       </div>
 
       <div class="scoll">
-         <div>
+         <div style="margin:12px 8px; border-radius: 10px;overflow: hidden;">
             <van-cell to="" icon="label-o" color="#6D7884" title="个人信息" is-link />
             <van-cell to="myReservation" icon="label-o" color="#2A67FE" title="我的预约" is-link />
             <van-cell to="" icon="label-o" color="#F9C95E" title="我的邀约" is-link />
-            <van-cell to="" icon="label-o" color="#ee0a24" title="我的办公区域" is-link />
-            <van-cell to="" icon="label-o" color="#ee0a24" title="公司员工" is-link />
           </div>
       </div>
     </div>
@@ -57,14 +55,7 @@ export default {
       images: [
         { imgUrl: require('@/assets/images/banner1.jpeg') },
         { imgUrl: require('@/assets/images/banner2.jpeg') },
-      ],
-      user: {
-        photo: null,
-        name: '老王头',
-        phone: '15234343434',
-        customerName: '123',
-        permission: '0',
-      },
+      ]
     }
   },
   created() {
@@ -89,18 +80,18 @@ export default {
   .homepage-image {
     position: relative;
     width: 100%;
-    height: 200px;
-    background: linear-gradient(to top, #FFFFFF, transparent),url('~@/assets/images/homopage3.jpeg') no-repeat;
-    opacity: 0.9;
+    height: 184px;
+    background: url('~@/assets/images/homopage3.jpeg') no-repeat;
     background-size: 100% auto;
   }
   .homepage-user {
     position: absolute; // 保证背景图片上的文字清晰
     top: 60%;
     left: 50%;
-    width: 84%;
-    height: 4rem;
-    background: #ffffffbd;
+    width: 90%;
+    height: 3.96rem;
+    background: #ffffff;
+    opacity: 0.8;
     border-radius: 20px;
     transform: translate(-50%, -50%);
     overflow: hidden;
@@ -108,10 +99,9 @@ export default {
   }
 
 .avatar {
-  width: 80px;
-  height: 80px;
-  border: 2px dashed #2A67FE;
-  background: #2a67fe30;
+  width: 90px;
+  height: 90px;
+  background: #969799d6;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
@@ -120,14 +110,6 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-  }
-  .upload {
-    opacity: 0;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9;
   }
 }
 .homepage-qr {
@@ -138,7 +120,7 @@ export default {
   flex-direction: column;
   align-items: end;
   .van-image {
-    width: 30px;
+    width: 50px;
     margin-right: 16px;
   }
   .homepage-tag {

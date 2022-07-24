@@ -23,7 +23,6 @@
             <div v-for="(reservationItem,index) in reservationList" :key="index" class="listCard-fill">
               <div class="listCard-fill-content" @click="openQrcode(reservationItem)">
 
-                <div class="backQrcode" v-if="reservationItem.state == '002'"></div>
 
                 <div class="listCard-fill-box">
                   <van-row type="flex" align="center" style="height: 100%;">
