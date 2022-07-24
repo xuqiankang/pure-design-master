@@ -16,14 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * <p>
- *
- * </p>
- *
- * @author 青哥哥
- * @since 2022-01-26
- */
+
 @Getter
 @Setter
 @TableName("sys_user")
@@ -58,17 +51,19 @@ public class User implements Serializable {
     @ApiModelProperty("创建时间")
     private Date createTime;
 
-    @ApiModelProperty("头像")
-    private String avatarUrl;
-
     @ApiModelProperty("角色")
     private String role;
 
-    @TableField(exist = false)
-    private List<Course> courses;
+    @ApiModelProperty("公司名称")
+    private String company;
 
-    @TableField(exist = false)
-    private List<Course> stuCourses;
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -138,35 +133,11 @@ public class User implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public List<Course> getStuCourses() {
-        return stuCourses;
-    }
-
-    public void setStuCourses(List<Course> stuCourses) {
-        this.stuCourses = stuCourses;
     }
 }

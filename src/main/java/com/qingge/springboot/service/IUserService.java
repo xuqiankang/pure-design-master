@@ -6,13 +6,15 @@ import com.qingge.springboot.controller.dto.UserPasswordDTO;
 import com.qingge.springboot.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
  * </p>
  *
- * @author 青哥哥
- * @since 2022-01-26
+ * @author xu
+ * @since 2022-07-24
  */
 public interface IUserService extends IService<User> {
 
@@ -23,4 +25,8 @@ public interface IUserService extends IService<User> {
     void updatePassword(UserPasswordDTO userPasswordDTO);
 
     Page<User> findPage(Page<User> objectPage, String username, String email, String address);
+
+    List<User> getInfoList();
+
+    List<User> getApply();
 }

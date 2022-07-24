@@ -5,15 +5,18 @@ import com.qingge.springboot.controller.dto.UserPasswordDTO;
 import com.qingge.springboot.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * <p>
  *  Mapper 接口
  * </p>
  *
- * @author 青哥哥
- * @since 2022-01-26
+ * @author xu
+ * @since 2022-07-24
  */
 public interface UserMapper extends BaseMapper<User> {
 
@@ -21,4 +24,10 @@ public interface UserMapper extends BaseMapper<User> {
     int updatePassword(UserPasswordDTO userPasswordDTO);
 
     Page<User> findPage(Page<User> page, @Param("username") String username, @Param("email") String email, @Param("address") String address);
+
+    @Select("select * from sys_user where apply is null ")
+    List<User> getInfoList();
+
+    @Select("select * from sys_user where apply is not null")
+    List<User> getApply();
 }

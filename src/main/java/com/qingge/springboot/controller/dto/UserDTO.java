@@ -1,6 +1,5 @@
 package com.qingge.springboot.controller.dto;
 
-import com.qingge.springboot.entity.Menu;
 import lombok.Data;
 
 import java.util.List;
@@ -14,10 +13,8 @@ public class UserDTO {
     private String username;
     private String password;
     private String nickname;
-    private String avatarUrl;
     private String token;
     private String role;
-    private List<Menu> menus;
 
     public Integer getId() {
         return id;
@@ -51,14 +48,6 @@ public class UserDTO {
         this.nickname = nickname;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
     public String getToken() {
         return token;
     }
@@ -75,11 +64,4 @@ public class UserDTO {
         this.role = role;
     }
 
-    public List<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<Menu> menus) {
-        this.menus = menus;
-    }
 }
