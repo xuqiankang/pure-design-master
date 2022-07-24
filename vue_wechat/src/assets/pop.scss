@@ -26,22 +26,22 @@
 
 .submitbotton {
   height: 40px;
-  margin: 6px ;
+  margin: 6px 6px 20px 6px;
+  display: flex;
+  .van-button {
+    flex: 1;
+    margin: 0 4px;
+  }
 }
 .cardPopup-content {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
   padding: 6px;
-  background: #fafafa;
+  background: #fff;
+  align-items: center;
   .cardPopup-content-right {
     width: 64%;
-    .van-cell {
-      background: none;
-    }
-    .van-cell::after {
-      border-bottom: 0.02667rem solid #c8c9cc;
-    }
   }
 }
 .cardPopup-content-left {
