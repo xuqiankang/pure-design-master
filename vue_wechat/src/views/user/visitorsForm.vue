@@ -1,6 +1,7 @@
 <template>
 <!-- 访客预约表单 -->
   <div class="reservationform" >
+    <van-nav-bar title="预约信息填写" left-arrow @click-left="goBack" />
     <div class="page-container">
     <div class="scroll">
       <van-form @submit="onSubmit">
@@ -114,9 +115,10 @@
 // import entouragePop from '../../layout/visitorsForespeak/components/entouragePop.vue'
 // import plateNumberPop from '../../layout/visitorsForespeak/components/plateNumberPop.vue'
 // import belongingsPop from '../../layout/visitorsForespeak/components/belongingsPop.vue'
-
+import BaseUI from '@/views/components/baseUI'
 export default {
   name: 'reservationform',
+  extends: BaseUI,
   components: {
     // visitorPop,
     // entouragePop,

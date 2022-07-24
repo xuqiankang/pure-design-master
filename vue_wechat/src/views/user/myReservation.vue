@@ -1,6 +1,7 @@
 <template>
 <!-- 我的预约 -->
   <div class="myReservation">
+    <van-nav-bar title="我的预约" left-arrow @click-left="goBack" />
     <div class="page-container">
       <div class="headerFiex">
         <van-tabs v-model="reservationActive" @change="changetabs">
@@ -42,16 +43,15 @@
       </div>
 
     </div>
-    <myqrcode-pop :popShow="myqrcodePopShow" :close="myqrcodePopClose" ref="myqrcodePop"></myqrcode-pop>
   </div>
 </template>
 
 <script>
-import myqrcodePop from './components/myqrcodePop.vue'
+import BaseUI from '@/views/components/baseUI'
 export default {
   name: 'myReservation',
+  extends: BaseUI,
   components: {
-    myqrcodePop,
   },
   data() {
     return {

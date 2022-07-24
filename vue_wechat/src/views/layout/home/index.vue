@@ -11,7 +11,7 @@
       </div>
 
       <div class="scoll">
-        <div class="swipeBox">
+        <div class="swipeBox"   v-if="currentUser.role !== '0'">
           <van-swipe style="height: 100%;" :autoplay="10000" vertical>
             <van-swipe-item>
               <van-icon name="bell" size="24" style="padding-left: 8px" color="#2a67fe" />
@@ -21,21 +21,20 @@
         </div>
 
         <div class="myCard-not">
-          <van-row gutter="16"  v-if="currentUser.permission == '0'">
+          <van-row gutter="16" v-if="currentUser.role == '2'" >
             <van-col :span="12">
-              <router-link to="/visitors">
+              <router-link to="/visitorsForm">
                 <div class="myCardlink-not" :style="{background: '#2A67FE'}">访客预约</div>
               </router-link>
             </van-col>
 
             <van-col :span="12">
-              <router-link to="">
+              <router-link to="/myReservation">
                 <div class="myCardlink-not" :style="{background: '#F9C95E'}">我的预约</div>
               </router-link>
             </van-col>
           </van-row>
-
-          <van-row gutter="16"  v-if="currentUser.permission == '1'">
+          <van-row gutter="16" v-if="currentUser.role == '1'" > 
             <van-col :span="12" >
               <router-link to="/myVisitors">
                 <div class="myCardlink-not" :style="{background: '#2bc107'}">我的来访</div>
@@ -43,8 +42,27 @@
             </van-col>
 
             <van-col :span="12" >
-              <router-link to="/myVisitors">
+              <router-link to="/previous">
                 <div class="myCardlink-not" :style="{background: '#ff6034'}">往期来访</div>
+              </router-link>
+            </van-col>
+          </van-row>
+           <van-row gutter="16"  v-if="currentUser.role == '0'">
+             <van-col :span="24" >
+              <router-link to="/addAdmin">
+                <div class="myCardlink-not" :style="{background: '#1989fa', padding: '0.4rem'}">新建管理员</div>
+              </router-link>
+            </van-col>
+
+            <van-col :span="12" >
+              <router-link to="/dele">
+                <div class="myCardlink-not" :style="{background: '#071ac1'}">信息维护</div>
+              </router-link>
+            </van-col>
+
+             <van-col :span="12" >
+              <router-link to="/check">
+                <div class="myCardlink-not" :style="{background: '#ee0a24'}">审核</div>
               </router-link>
             </van-col>
           </van-row>

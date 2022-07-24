@@ -1,6 +1,6 @@
 <template>
-<!-- 我的预约 -->
   <div class="myReservation">
+    <van-nav-bar title="我的来访" left-arrow @click-left="goBack" />
     <div class="page-container">
       <div class="headerFiex">
         <van-tabs v-model="reservationActive" @change="changetabs">
@@ -48,8 +48,12 @@
 </template>
 
 <script>
+import BaseUI from '@/views/components/baseUI'
+import {reports} from '@/utils/mock.js'
+
 export default {
   name: 'myReservation',
+  extends: BaseUI,
   components: {
   },
   data() {
@@ -66,22 +70,12 @@ export default {
         limit: 10,
         orderby: ''
       },
-      bakList: [
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '002'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '003'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '005'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '004'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '006'},
-      ]
+      bakList: []
     }
   },
   created() {
     this.onSearch()
+    this.bakList = reports
   },
   methods: {
     // 切换时
