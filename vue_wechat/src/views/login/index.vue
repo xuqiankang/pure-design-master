@@ -24,7 +24,8 @@
     </div>
 </template>
 <script>
-import { setSessionToken } from "@/utils/uToken";
+import { setSessionToken, setToken } from "@/utils/uToken";
+import { login } from '@/api/wechatApi.js'
 import BaseUI from '@/views/components/baseUI'
 export default {
     extends: BaseUI,
@@ -41,23 +42,27 @@ export default {
     mounted() {
     },
     methods: {
-      goBack() {
-        this.$router.back(-1)
-      },
       onSubmit() {
-        // this.setLoad()
-        // getToken(this.loginForm.username, this.loginForm.password)
-        //   .then(responseData => {
-        //     if(responseData.code == 100) {
-        //       setSessionToken('currentUser', responseData.data)
-        //     } else {
-        //       this.$toast.fail(responseData.msg)
-        //     }
-        //       this.resetLoad()
-        //   })
-        //   .catch(error => {
-        //       this.resetLoad()
-        //   })
+        let uer = {
+          username: this.loginForm.username,
+          password: this.loginForm.password
+        }
+        this.setLoad()
+        login(uer)
+          .then(responseData => {
+            if(responseData.code == 200) {
+              setSessionToken('currentUser', responseData.data)
+              setToken('token', responseData.data.token)
+              this.$toast.success('登录成功')
+              this.$router.push('/')
+            } else {
+              this.$toast.fail(responseData.msg)
+            }
+            this.resetLoad()
+          })
+          .catch(error => {
+            this.resetLoad()
+        })
       }
     }
 }

@@ -21,13 +21,13 @@ export default new Router({
           path: '/',
           name: 'home',
           component: Home,
-          meta: { title: '首页'}
+          meta: { title: '首页', verify: true}
         },
         {
           path: '/mine',
           name: 'mine',
           component: _import('layout/mine/index'),
-          meta: { title: '我的'},
+          meta: { title: '我的', verify: true},
         }
       ]
     },
@@ -40,8 +40,20 @@ export default new Router({
     {
       path: '/personal',
       name: 'personal',
-      component: _import('personal/index'),
-      meta: { title: '个人信息'},
+      component: _import('personal/personal'),
+      meta: { title: '个人信息', verify: true},
+    },
+    {
+      path: '/password',
+      name: 'password',
+      component: _import('personal/password'),
+      meta: { title: '修改密码', verify: true},
+    },
+    {
+      path: '/authorized',
+      name: 'authorized',
+      component: _import('personal/authorized'),
+      meta: { title: '认证管理员', verify: true},
     }
   ]
 })

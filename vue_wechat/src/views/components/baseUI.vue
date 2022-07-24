@@ -8,21 +8,13 @@ export default {
   
   data() {
     return {
-      currentUser: {},
-      // currentUser: JSON.parse(sessionStorage.getItem('user')),  // 登录用户
+      currentUser: JSON.parse(sessionStorage.getItem('currentUser')),  // 登录用户
       loadcount: 0,   // loading加载次数
       loading: false,  // 加载标志，用与显示加载遮罩
       isAlert: false   // 已经弹出alert对话标志
     }
   },
   created() {
-     this.currentUser =  {
-        photo: null,
-        name: '老王头',
-        phone: '15234343434',
-        customerName: '123',
-        permission: '0',
-      }
   },
   methods: {
     setLoad() {
@@ -56,7 +48,10 @@ export default {
       } else {
         this.$toast.success(msgData.msg)
       }
-    }
+    },
+    goBack() {
+      this.$router.back(-1)
+    },
   },
   watch: {
     loadcount: function(val, oldVal) {

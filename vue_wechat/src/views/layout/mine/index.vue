@@ -15,15 +15,15 @@
                 </van-col>
 
                 <van-col :span="16">
-                  <p>{{currentUser.name}}</p>
+                  <p>{{currentUser.nickname}}</p>
                   <p>{{currentUser.phone}}</p>
-                  <p>{{currentUser.customerName}}</p>
+                  <p>{{currentUser.company}}</p>
                 </van-col>
             </van-row>
             <div class="homepage-qr">
-              <div class="homepage-tag" v-if="currentUser.permission == '2'">访客</div>
-              <div class="homepage-tag" v-if="currentUser.permission == '1'">公司管理员</div>
-              <div class="homepage-tag" v-if="currentUser.permission == '0'">超级管理员</div>
+              <div class="homepage-tag" v-if="currentUser.role == '2'">访客</div>
+              <div class="homepage-tag" v-if="currentUser.role == '1'">公司管理员</div>
+              <div class="homepage-tag" v-if="currentUser.role == '0'">超级管理员</div>
               <van-image fit="cover" :src="qr" />
             </div>
           </div>
@@ -32,11 +32,13 @@
 
       <div class="scoll">
          <div style="margin:12px 8px; border-radius: 10px;overflow: hidden;">
-            <van-cell to="" icon="label-o" color="#6D7884" title="个人信息" is-link />
-            <van-cell to="myReservation" icon="label-o" color="#2A67FE" title="我的预约" is-link />
-            <van-cell to="" icon="label-o" color="#F9C95E" title="我的邀约" is-link />
+            <van-cell to="/personal" icon="label-o" color="#6D7884" title="个人信息" is-link />
+            <van-cell to="/password" icon="label-o" color="#2A67FE" title="修改密码" is-link />
+            <van-cell to="/authorized" icon="label-o" color="#F9C95E" title="认证管理员" is-link />
           </div>
       </div>
+
+      <van-button round block type="default" @click="logout">退出登录</van-button>
     </div>
   </div>
 </template>
@@ -44,6 +46,7 @@
 <script>
 import qr from '@/assets/images/qrcode.jpeg'
 import BaseUI from '@/views/components/baseUI'
+import { removeSessionToken, removeToken } from "@/utils/uToken";
 export default {
   name: 'homepage',
   extends: BaseUI,
@@ -63,15 +66,12 @@ export default {
   mounted(){
   },
   methods: {
-    async getUserInfo(){
-      const data = await getByOpenId('oVCKZ6Jv-D2aE6jUrb9-nJElv0RM')
-      if(data.type == 'success'){
-        this.user = data.data
-      }else{
-
-      }
-    },
-
+    logout() {
+      removeSessionToken('currentUser')
+      removeToken('token')
+      this.$toast.success("退出成功")
+      this.$router.replace('/login')
+    }
   }
 }
 </script>

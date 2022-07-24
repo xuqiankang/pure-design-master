@@ -17,10 +17,11 @@ router.beforeEach(async (to, from, next) => {
     document.title = to.meta.title
   }
   if (to.meta.verify) { // 是否需要登录
-    if (sessionStorage.getItem('user')) {
+    if (sessionStorage.getItem('currentUser')) {
       next()
     } else {
-      next({path: '/bindingInfo', replace: true})
+      next({path: '/login'})
+      return
     }
   } else {
     next()
