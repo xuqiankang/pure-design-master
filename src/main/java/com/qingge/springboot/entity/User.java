@@ -57,6 +57,17 @@ public class User implements Serializable {
     @ApiModelProperty("公司名称")
     private String company;
 
+    public String getApply() {
+        return apply;
+    }
+
+    public void setApply(String apply) {
+        this.apply = apply;
+    }
+
+    @ApiModelProperty("申请单状态")
+    private String apply;
+
     public String getCompany() {
         return company;
     }
