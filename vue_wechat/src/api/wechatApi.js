@@ -54,6 +54,28 @@ export const saveForm = (data) =>
     data
   })
 
+// 公司管理员查看 预约单
+export const getOrderInfo = (username) => 
+  request({
+    url: '/order/getOrderInfo/' + username,
+    method: 'get'
+  })
+// 游客查看 预约单
+export const getOrderInfoPer = (username) => 
+  request({
+    url: '/order/getOrderInfoPer/' + username,
+    method: 'get'
+  })
+
+// 管理员 查看认证单
+export const getApply = () => 
+  request({
+    url: '/user/getApply',
+    method: 'get'
+  })
+
+
+
 
 
 

@@ -28,17 +28,8 @@ export default {
       this.form.apply = '1'
       saveAdmin(this.form).then(responseData => {
           if(responseData.code == 200) {
-            console.log(responseData);
-            // this.$toast.success("提交成功")
-            // this.$router.go(-1)
-            // this.getUser().then(res => {
-            //   res.token = getToken('token')
-            //   setSessionToken('currentUser', res.data)
-            //   this.$toast.success("修改成功")
-            //   this.$router.go(-1)
-            // }).catch(()=> {
-            //   this.$toast.fail("修改失败")
-            // })
+            this.$toast.success("提交成功")
+            this.$router.go(-1)
           } else {
             this.$toast.fail(responseData.msg)
           }

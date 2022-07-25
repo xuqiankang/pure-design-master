@@ -34,11 +34,10 @@
          <div style="margin:12px 8px; border-radius: 10px;overflow: hidden;">
             <van-cell to="/personal" icon="label-o" color="#6D7884" title="个人信息" is-link />
             <van-cell to="/password" icon="label-o" color="#2A67FE" title="修改密码" is-link />
-
-            <van-cell v-if="currentUser.role == 2" :to="currentUser.appay == '1' ? '' : '/authorized'" icon="label-o" color="#F9C95E"  :is-link="currentUser.appay != '1'">
+            <van-cell v-if="currentUser.role == 2" :to="currentUser.apply == '1' ? '' : '/authorized'" icon="label-o" color="#F9C95E"  :is-link="currentUser.appay != '1'">
               <template #title>
                 <span class="custom-title">认证管理员</span>
-                <van-tag type="danger" v-if="currentUser.appay == '1'">审核中</van-tag>
+                <van-tag type="danger" v-if="currentUser.apply == '1'">审核中</van-tag>
               </template>
             </van-cell>
           </div>
@@ -70,9 +69,11 @@ export default {
   },
   created() {
     this.getUser().then(res => {
+      console.log(res);
       res.data.token = getToken('token')
       // res.data.appay = 1
       setSessionToken('currentUser', res.data)
+      console.log(this.currentUser);
     }).catch(()=> {
     })
   },

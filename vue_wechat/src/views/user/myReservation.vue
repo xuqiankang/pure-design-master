@@ -6,7 +6,7 @@
       <div class="headerFiex">
         <van-tabs v-model="active" @change="changetabs">
           <van-tab title="已提交" name="1"></van-tab>
-          <van-tab title="待提交" name="2"></van-tab>
+          <van-tab title="待提交" name="0"></van-tab>
         </van-tabs>
       </div>
 
@@ -39,12 +39,12 @@
           </van-list>
         </van-pull-refresh>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import { getOrderInfoPer } from '@/api/wechatApi.js'
 import BaseUI from '@/views/components/baseUI'
 export default {
   name: 'myReservation',
@@ -82,7 +82,7 @@ export default {
   },
   created() {
     this.onSearch()
-    this.search.params = [{'columnName':'vst_personnal_id', 'queryType': '=', 'value': this.$route.query.vstPersonnalId}]
+    // this.search.params = [{'columnName':'vst_personnal_id', 'queryType': '=', 'value': this.$route.query.vstPersonnalId}]
   },
   methods: {
     myqrcodePopClose() {
@@ -122,33 +122,33 @@ export default {
       this.onSearch();
     },
     getlist() {
-      this.$nextTick(() => {
-
-        if (this.refreshing) {
-          this.list = [];
-          this.refreshing = false;
-        }
-        // 测试页面效果
-        let bakList = []
-        bakList = this.bakList.filter(item => {
-          if (this.active == 1) {
-            return item.state == '001'
-          } else if (this.active == 2) {
-            return item.state == '002'
-          } else {
-            return item.state != '002' && item.state != '001'
-          }
-        })
-
-        this.list = [...bakList]
-        this.loadings = false;
-        if (this.bakList.length < 20) {  //数据加载完成
-          this.finished = true;
+      getOrderInfoPer(this.currentUser.username).then(res => {
+        if(res.data.data instanceof Array) {
+          this.$nextTick(() => {
+            if (this.refreshing) {
+              this.list = [];
+              this.refreshing = false;
+            }
+            this.list = [...this.list, ...res.data.data]
+            // console.log( this.list);
+            // this
+            // ifDraft
+            this.loadings = false;
+            if (res.length < 20) {  //数据全部加载完成
+              this.finished = true;
+            } else {
+              this.finished= false
+            }
+          })
         } else {
-          this.finished= false
+          this.showMessage(responseData)
         }
+        this.resetLoad()
+      }).catch(error => {
+        this.resetLoad()
+        this.outputError(error)
       })
-    }
+    },
 
   }
 }
