@@ -32,10 +32,22 @@ public class OrderInfoImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> imple
     private OrderInfoMapper orderInfoMapper;
 
     @Override
-    public Result getByParams(OrderInfo one) {
+    public Result getByVisitAdmin(OrderInfo one) {
         if (one != null) {
             QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("visit_admin", one.getVisitAdmin());
+            List<OrderInfo>orderInfos =  orderInfoMapper.getListByVisitAdmin(one);
+            return Result.success(orderInfos);
+        } else {
+            throw new ServiceException(Constants.CODE_400, "参数异常");
+        }
+    }
+
+    @Override
+    public Result getByName(OrderInfo one) {
+        if (one != null) {
+            QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("name", one.getName());
             List<OrderInfo>orderInfos =  orderInfoMapper.getListByVisitAdmin(one);
             return Result.success(orderInfos);
         } else {

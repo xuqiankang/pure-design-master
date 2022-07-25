@@ -14,7 +14,9 @@ import com.qingge.springboot.entity.OrderInfo;
  */
 public interface OrderInfoService extends IService<OrderInfo> {
 
-    Result getByParams(OrderInfo orderInfo);
+    Result getByVisitAdmin(OrderInfo orderInfo);
+
+    Result getByName(OrderInfo orderInfo);
 
     OrderInfo addOrder(OrderInfo orderInfo);
 }
