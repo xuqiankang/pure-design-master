@@ -61,7 +61,7 @@ public class OrderInfoImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> imple
         if (one != null) {
             QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("name", one.getName());
-            List<OrderInfo>orderInfos =  orderInfoMapper.getListByVisitAdmin(one);
+            List<OrderInfo>orderInfos =  orderInfoMapper.getByName(one);
             setStatus(orderInfos);
             return Result.success(orderInfos);
         } else {

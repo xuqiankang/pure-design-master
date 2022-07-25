@@ -56,7 +56,7 @@ public class UserController {
     }
 
     // 新增或者更新
-    @PostMapping
+    @PostMapping("/username/save")
     public Result save(@RequestBody User user) {
         if (user.getId() == null && user.getPassword() == null) {  // 新增用户默认密码
             user.setPassword("123");

@@ -20,8 +20,11 @@ import java.util.List;
  * @since 2022-07-24
  */
 public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
-    @Select("select * from  order_info where visit_admin = trim(#{visitAdmin}) ")
+    @Select("select * from  order_info where visit_admin = trim(#{visitAdmin}) order by time desc ")
     List<OrderInfo> getListByVisitAdmin(OrderInfo one);
+
+    @Select("select * from  order_info where name = trim(#{name}) order by time desc")
+    List<OrderInfo> getByName(OrderInfo one);
 
 //    @Update("update sys_user set password = #{newPassword} where username = #{username} and password = #{password}")
 //    int updatePassword(UserPasswordDTO userPasswordDTO);

@@ -28,11 +28,11 @@
           />
           </van-popup>
 
-          <van-field required readonly clickable label="到访人员" name="picker" :value="bizFormModel.visitAdmin" placeholder="请选择被访人员" @click="openAdmin" />
+          <van-field required readonly clickable label="到访人员" name="picker" :value="bizFormModel.visitNickname" placeholder="请选择被访人员" @click="openAdmin" />
           <van-popup v-model="showvVsitAdmin" position="bottom">
             <van-picker
               :default-index="0"
-              value-key="username"
+              value-key="nickname"
               show-toolbar
               :columns="adminList"
               @confirm="onConfirmAdmin"
@@ -160,13 +160,14 @@ export default {
     },
     // 提交
     onSubmit() {
-      console.log(1);
+      this.bizFormModel.ifDraft = '1'
+      this.bizFormModel.status = '2'
       this.getList()
     },
     // 草稿
     addDraft(){
-      console.log(0);
       this.bizFormModel.ifDraft = '0'
+      this.bizFormModel.status = '1'
       this.getList('0')
     },
     save(form,type) {
@@ -191,6 +192,7 @@ export default {
     onConfirmCompany(value) {
       this.bizFormModel.visitCompany = value.company
       this.adminList = this.allList.filter(item => item.company == value.company)
+      console.log(this.adminList)
       this.showbeVisitCompany = false;
     },
     // 打开被访人弹框
@@ -204,6 +206,7 @@ export default {
     // 到访人员
     onConfirmAdmin(val) {
       this.bizFormModel.visitAdmin = val.username
+      this.bizFormModel.visitNickname = val.nickname
       this.showvVsitAdmin = false
     },
     // 日期选中
@@ -230,8 +233,10 @@ export default {
     initFormModel(This) {
       return {
         'id': '',
+        'status': '',
         'visitCompany' : '' , // 被访公司名称
         'visitAdmin': '', // 被访问公司管理员
+        'visitNickname': '',
         'name':  validatenull(This) || validatenull(This.username) ? '' : This.username, // 来访人员姓名-账号
         'nickname': validatenull(This) || validatenull(This.nickname) ? '' : This.nickname, // 来访人员昵称
         'email':  validatenull(This) || validatenull(This.email) ? '' : This.email, // 来访人邮箱

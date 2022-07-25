@@ -67,6 +67,13 @@ export const getOrderInfoPer = (username) =>
     method: 'get'
   })
 
+// 游客\管理员删除 预约单
+export const delOrderInfoPer = (id) => 
+  request({
+    url: '/order/deleteOrder/' + id,
+    method: 'get'
+  })
+
 // 管理员 查看认证单
 export const getApply = () => 
   request({
