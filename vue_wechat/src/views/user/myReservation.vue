@@ -4,12 +4,10 @@
     <van-nav-bar title="我的预约" left-arrow @click-left="goBack" />
     <div class="page-container">
       <div class="headerFiex">
-        <van-tabs v-model="reservationActive" @change="changetabs">
-          <van-tab title="待确认" name="1"></van-tab>
-          <van-tab title="已确认" name="2"></van-tab>
-          <van-tab title="已结束" name="3"></van-tab>
+        <van-tabs v-model="active" @change="changetabs">
+          <van-tab title="已提交" name="1"></van-tab>
+          <van-tab title="待提交" name="2"></van-tab>
         </van-tabs>
-        <van-search v-model.trim="value" placeholder="请输入搜索关键词" shape="round" @input="onSearch()" />
       </div>
 
        <div class="scroll">
@@ -21,17 +19,17 @@
             finished-text="没有更多了"
             @load="onLoad"
           >
-            <div v-for="(reservationItem,index) in reservationList" :key="index" class="listCard-fill">
-              <div class="listCard-fill-content" @click="openQrcode(reservationItem)">
+            <div v-for="(item, index) in list" :key="index" class="listCard-fill">
+              <div class="listCard-fill-content" @click="openQrcode(item)">
                 <div class="listCard-fill-box">
                   <van-row type="flex" align="center" style="height: 100%;">
                     <van-col :span="16">
-                      <div class="listCard-fill-title">租户名称/{{reservationItem.name}}</div>
-                      <div style="padding-top:5px"> {{reservationItem.address}}</div>
-                      <div> 到访日期:{{reservationItem.visitorDate}}</div>
+                      <div class="listCard-fill-title">租户名称/{{item.name}}</div>
+                      <div style="padding-top:5px"> {{item.address}}</div>
+                      <div> 到访日期:{{item.visitorDate}}</div>
                     </van-col>
                     <van-col :span="8">
-                      <van-button v-if="reservationItem.state == '001' || reservationItem.state == '002'" size="mini" type="info" round color="#FFA94F">取消</van-button>
+                      <van-button v-if="item.state == '001' || item.state == '002'" size="mini" type="info" round color="#FFA94F">取消</van-button>
                       <van-button v-else size="mini" type="info" round color="#FFA94F"> 再次预约 </van-button>
                     </van-col>
                   </van-row>
@@ -56,12 +54,12 @@ export default {
   data() {
     return {
       myqrcodePopShow: false,
-      reservationActive: '1',
+      active: '1',
       value: '',
       loadings: false,
       finished: false,
       refreshing: false,
-      reservationList: [],
+      list: [],
       search: {
         params: [],    
         offset: 0,
@@ -90,15 +88,15 @@ export default {
     myqrcodePopClose() {
       this.myqrcodePopShow = false
     },
-    openQrcode(reservationItem) {
-      if (reservationItem.state == '002') {
+    openQrcode(item) {
+      if (item.state == '002') {
         this.myqrcodePopShow = true
-        this.$refs.myqrcodePop.initQrcode(reservationItem)
+        this.$refs.myqrcodePop.initQrcode(item)
       }
     },
     // 切换时
     changetabs() {
-      this.reservationList = []
+      this.list = []
       this.onSearch()
     },
     onRefresh() {
@@ -108,13 +106,13 @@ export default {
     },
     // 查询
     onSearch() {
-      this.reservationList = []
+      this.list = []
       this.search.offset = 0
       this.currentPage = 1
       this.onLoad()
     },
     onLoad() {
-      this.getreservationList();
+      this.getlist();
       // this.currentPage += 1;// 页数+1
       // this.search.offset = this.currentPage * this.search.limit
     },
@@ -123,26 +121,26 @@ export default {
       this.loadings = true;
       this.onSearch();
     },
-    getreservationList() {
+    getlist() {
       this.$nextTick(() => {
 
         if (this.refreshing) {
-          this.reservationList = [];
+          this.list = [];
           this.refreshing = false;
         }
         // 测试页面效果
         let bakList = []
         bakList = this.bakList.filter(item => {
-          if (this.reservationActive == 1) {
+          if (this.active == 1) {
             return item.state == '001'
-          } else if (this.reservationActive == 2) {
+          } else if (this.active == 2) {
             return item.state == '002'
           } else {
             return item.state != '002' && item.state != '001'
           }
         })
 
-        this.reservationList = [...bakList]
+        this.list = [...bakList]
         this.loadings = false;
         if (this.bakList.length < 20) {  //数据加载完成
           this.finished = true;

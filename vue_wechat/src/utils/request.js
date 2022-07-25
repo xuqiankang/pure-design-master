@@ -26,17 +26,15 @@ service.interceptors.request.use(config => {
 // respone拦截器
 service.interceptors.response.use(
   response => {
-    if (response.status==200){
-      if (response.data.code == 20011){
+    if (response.data.code == 401){
         removeToken('token')
-        removeSessionToken('user')
+        removeSessionToken('currentUser')
         Dialog.alert({
           title: '提示',
           message: '您长时间未操作，请重新授权登录',
         }).then(() => {
-          //window.location.href = '/demo'
+          window.location.href = '/login'
         });
-      }
       return response.data;
     }
     return response.data;
