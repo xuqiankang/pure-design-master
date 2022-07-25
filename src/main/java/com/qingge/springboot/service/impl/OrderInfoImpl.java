@@ -63,16 +63,8 @@ public class OrderInfoImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> imple
         return one;
     }
 
-    private OrderInfo getOrderInfo(OrderInfo orderInfo) {
-        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id", orderInfo.getId());
-        OrderInfo one;
-        try {
-            one = getOne(queryWrapper); // 从数据库查询用户信息
-        } catch (Exception e) {
-            LOG.error(e);
-            throw new ServiceException(Constants.CODE_500, "系统错误");
-        }
-        return one;
+    @Override
+    public void deleteOrder(String id) {
+        orderInfoMapper.deleteById(id);
     }
 }

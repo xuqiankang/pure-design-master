@@ -65,6 +65,28 @@ public class OrderInfo implements Serializable {
     @ApiModelProperty("是否草稿")
     private String ifDraft;
 
+    @ApiModelProperty("用戶昵稱")
+    private String nickname;
+
+    @ApiModelProperty("管理員昵稱")
+    private String visitNickname;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getVisitNickname() {
+        return visitNickname;
+    }
+
+    public void setVisitNickname(String visitNickname) {
+        this.visitNickname = visitNickname;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

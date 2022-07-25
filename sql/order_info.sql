@@ -11,7 +11,7 @@
  Target Server Version : 50622
  File Encoding         : 65001
 
- Date: 24/07/2022 21:03:30
+ Date: 25/07/2022 21:34:19
 */
 
 SET NAMES utf8mb4;
@@ -36,15 +36,17 @@ CREATE TABLE `order_info`  (
   `time` timestamp(6) NULL DEFAULT NULL COMMENT '访问时间',
   `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '预约单状态(1.暂存待提交2.提交待审核3.审核通过4.审核未通过5.已过期)',
   `if_draft` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '是否草稿',
+  `visit_nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '管理員昵稱',
+  `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用戶昵稱',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
-INSERT INTO `order_info` VALUES (1, '华钦科技', 'admin', 'xss', '1321564@qq.com', '135xxxx2241', '华为', '培训', '无', '1', 'bz', '2022-07-28 19:19:02.000000', '1', NULL);
-INSERT INTO `order_info` VALUES (3, '123', 'admin1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `order_info` VALUES (4, '中電金信', 'yss', 'xss', '1321564@qq.com', '135xxxx2241', '华为', '培训', '无', '1', 'bz', '2022-07-28 19:19:02.000000', '1', NULL);
-INSERT INTO `order_info` VALUES (5, '123', 'admin1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `order_info` VALUES (1, '华钦科技', 'admin', 'xss', '1321564@qq.com', '135xxxx2241', '华为', '培训', '无', '1', 'bz', '2022-07-28 19:19:02.000000', '1', NULL, NULL, NULL);
+INSERT INTO `order_info` VALUES (3, '123', 'admin1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `order_info` VALUES (4, '中電金信', 'yss', 'xss', '1321564@qq.com', '135xxxx2241', '华为', '培训', '无', '1', 'bz', '2022-07-28 19:19:02.000000', '1', NULL, NULL, NULL);
+INSERT INTO `order_info` VALUES (5, '123', 'admin1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -17,6 +17,8 @@
         <result column="time" property="time" />
         <result column="status" property="status" />
         <result column="ifDraft" property="ifDraft" />
+        <result column="nickname" property="nickname" />
+        <result column="visit_nickname" property="visitNickname" />
     </resultMap>
 
 

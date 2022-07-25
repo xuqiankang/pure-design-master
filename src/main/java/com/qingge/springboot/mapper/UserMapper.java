@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qingge.springboot.controller.dto.UserPasswordDTO;
 import com.qingge.springboot.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -30,4 +31,10 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select * from sys_user where apply is not null")
     List<User> getApply();
+
+    @Update("update  sys_user set apply = #{apply} where id = #{id}")
+    void updateApplyById(@Param("apply")String apply,@Param("id") String id);
+
+    @Delete("delete from sys_user where id = #{id}")
+    void deleteApplyById(String id);
 }

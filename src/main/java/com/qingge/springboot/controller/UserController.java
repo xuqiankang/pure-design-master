@@ -131,5 +131,23 @@ public class UserController {
         List<User> users = userService.getApply();
         return Result.success(users);
     }
+
+    @GetMapping("/updateApply/{apply}/{id}")
+    public Result updateApply(@PathVariable String apply,@PathVariable String id) {
+        if (StrUtil.isBlank(apply) || StrUtil.isBlank(id)) {
+            return Result.error(Constants.CODE_400, "参数错误");
+        }
+        userService.updateApplyById(apply,id);
+        return Result.success();
+    }
+
+    @GetMapping("/deleteApply/{id}")
+    public Result deleteApply(@PathVariable String id) {
+        if (StrUtil.isBlank(id)) {
+            return Result.error(Constants.CODE_400, "参数错误");
+        }
+        userService.deleteById(id);
+        return Result.success();
+    }
 }
 

@@ -89,6 +89,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return userMapper.getApply();
     }
 
+    @Override
+    public void updateApplyById(String apply, String id) {
+        userMapper.updateApplyById(apply,id);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        userMapper.deleteApplyById(id);
+    }
+
     private User getUserInfo(UserDTO userDTO) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", userDTO.getUsername());

@@ -29,4 +29,8 @@ public interface IUserService extends IService<User> {
     List<User> getInfoList();
 
     List<User> getApply();
+
+    void updateApplyById(String apply, String id);
+
+    void deleteById(String id);
 }

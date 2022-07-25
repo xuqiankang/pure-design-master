@@ -19,4 +19,6 @@ public interface OrderInfoService extends IService<OrderInfo> {
     Result getByName(OrderInfo orderInfo);
 
     OrderInfo addOrder(OrderInfo orderInfo);
+
+    void deleteOrder(String id);
 }
