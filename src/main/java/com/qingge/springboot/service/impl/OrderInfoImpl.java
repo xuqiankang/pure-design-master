@@ -13,6 +13,7 @@ import com.qingge.springboot.service.OrderInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,9 +38,21 @@ public class OrderInfoImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> imple
             QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("visit_admin", one.getVisitAdmin());
             List<OrderInfo>orderInfos =  orderInfoMapper.getListByVisitAdmin(one);
+            setStatus(orderInfos);
             return Result.success(orderInfos);
         } else {
             throw new ServiceException(Constants.CODE_400, "参数异常");
+        }
+    }
+
+    private void setStatus(List<OrderInfo> orderInfos) {
+        for (OrderInfo orderInfo : orderInfos) {
+            if("2".equals(orderInfo.getStatus())){
+                int abs = Math.abs((int) ((new Date()).getTime() - orderInfo.getTime().getTime()) / (1000 * 3600 * 24));
+                if(abs>=1){
+                    orderInfo.setStatus("5");
+                }
+            }
         }
     }
 
@@ -49,6 +62,7 @@ public class OrderInfoImpl extends ServiceImpl<OrderInfoMapper, OrderInfo> imple
             QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("name", one.getName());
             List<OrderInfo>orderInfos =  orderInfoMapper.getListByVisitAdmin(one);
+            setStatus(orderInfos);
             return Result.success(orderInfos);
         } else {
             throw new ServiceException(Constants.CODE_400, "参数异常");
