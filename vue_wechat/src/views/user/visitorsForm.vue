@@ -8,7 +8,8 @@
       </div>
       <div class="scroll">
         <van-cell-group title="个人信息">
-          <van-field required v-model="bizFormModel.name" label="姓名" name="name" placeholder="姓名" :rules="[{ required: true, message: '请输入姓名' }]" />
+          <van-field disabled v-model="bizFormModel.name" label="账号" name="name" placeholder="账号"  />
+          <van-field required v-model="bizFormModel.nickname" label="姓名" name="nickname" placeholder="姓名" :rules="[{ required: true, message: '请输入姓名' }]" />
           <van-field required v-model="bizFormModel.phone" type="tel" name="phone" label="电话" placeholder="电话" :rules="[{ required: true, message: '请输入电话' }]" />
           <van-field v-model="bizFormModel.company" name="company" label="公司"  placeholder="公司"  />
           <van-field v-model="bizFormModel.email" name="email" label="邮箱"  placeholder="邮箱"  />
@@ -19,7 +20,7 @@
           <van-popup v-model="showbeVisitCompany" position="bottom">
           <van-picker
               :default-index="0"
-              value-key="name"
+              value-key="company"
               show-toolbar
               :columns="companyList"
               @confirm="onConfirmCompany"
@@ -31,7 +32,7 @@
           <van-popup v-model="showvVsitAdmin" position="bottom">
             <van-picker
               :default-index="0"
-              value-key="name"
+              value-key="username"
               show-toolbar
               :columns="adminList"
               @confirm="onConfirmAdmin"
@@ -98,6 +99,8 @@
 <script>
 import BaseUI from '@/views/components/baseUI'
 import {validatenull} from '@/utils/validate'
+import { getInfoList,saveForm } from '@/api/wechatApi.js'
+
 export default {
   name: 'reservationform',
   extends: BaseUI,
@@ -105,46 +108,89 @@ export default {
   },
   data () {
     return {
+      allList: [],
       showbeVisitCompany: false, // 被访公司选择弹框
       showvVsitAdmin: false, // 被访人弹框
       showTime: false, // 到访日期
       peopleList: [{name: ''}],
       articleList: [{name: ''}],
       carList: [{name: ''}],
-      companyList: [
-        {name: 'xxx管理有限公司1', id: 11},
-        {name: 'xxx管理有限公司2', id: 22},
-      ],
+      companyList: [],
       adminList: [
         {name: '老王', id: 1},
       ],
-      bizFormModel: this.initFormModel(),
+      bizFormModel: {},
     }
   },
   created () {
+    this.getInfoLists()
+    this.bizFormModel = this.initFormModel(this.currentUser)
   },
   mounted () {
   },
   methods: {
-    getList() {
+    getInfoLists() {
+      getInfoList().then(responseData => {
+          if(responseData.code == 200) {
+            this.allList = responseData.data
+            this.companyList = this.allList.filter(item => item.role == 1)
+            this.companyList = this.companyList.reduce(function (tempArr, item) {
+                if (tempArr.findIndex((ele) => ele.company === item.company) === -1) {
+                    tempArr.push(item)
+                }
+                return tempArr
+            }, [])
+          } else {
+            this.$toast.fail(responseData.msg)
+          }
+          this.resetLoad()
+        })
+        .catch(error => {
+          this.resetLoad()
+      })
+    },
+    getList(type) {
       let people = this.peopleList.map(item => item.name)
       let article = this.articleList.map(item => item.name)
       let car = this.carList.map(item => item.name)
       this.bizFormModel.people = people.join(',')
       this.bizFormModel.article = article.join(',')
       this.bizFormModel.car = car.join(',')
+      this.save(this.bizFormModel,type)
     },
     // 提交
     onSubmit() {
+      console.log(1);
       this.getList()
     },
     // 草稿
     addDraft(){
-      this.getList()
+      console.log(0);
+      this.bizFormModel.ifDraft = '0'
+      this.getList('0')
+    },
+    save(form,type) {
+      saveForm(form).then(responseData => {
+        if(responseData.code == 200) {
+          if (type) {
+            this.$toast.success('保存成功')
+          } else {
+            this.$toast.success('提交成功')
+          }
+          this.$router.go(-1)
+        } else {
+          this.$toast.fail(responseData.msg)
+        }
+        this.resetLoad()
+      })
+      .catch(error => {
+        this.resetLoad()
+    })
     },
     // 到访公司
     onConfirmCompany(value) {
-      this.bizFormModel.visitCompany = value.name
+      this.bizFormModel.visitCompany = value.company
+      this.adminList = this.allList.filter(item => item.company == value.company)
       this.showbeVisitCompany = false;
     },
     // 打开被访人弹框
@@ -157,7 +203,7 @@ export default {
     },
     // 到访人员
     onConfirmAdmin(val) {
-      this.bizFormModel.visitAdmin = val.name
+      this.bizFormModel.visitAdmin = val.username
       this.showvVsitAdmin = false
     },
     // 日期选中
@@ -176,7 +222,6 @@ export default {
     },
     // 转数组
     getOptions(val) {
-      // val = val.replace(/^\"|\"$/g,'')
       if (bo.indexOf("，") != -1) {
         bo = bo.replace(/，/ig,',')
       }
@@ -184,12 +229,15 @@ export default {
     },
     initFormModel(This) {
       return {
+        'id': '',
         'visitCompany' : '' , // 被访公司名称
         'visitAdmin': '', // 被访问公司管理员
-        'name': '', // 来访人员姓名
-        'email': '', // 来访人邮箱
-        'phone': '', // 来访人电话
-        'company': '', // 来访人公司名称
+        'name':  validatenull(This) || validatenull(This.username) ? '' : This.username, // 来访人员姓名-账号
+        'nickname': validatenull(This) || validatenull(This.nickname) ? '' : This.nickname, // 来访人员昵称
+        'email':  validatenull(This) || validatenull(This.email) ? '' : This.email, // 来访人邮箱
+        'phone':  validatenull(This) || validatenull(This.phone) ? '' : This.phone, // 来访人电话
+        'company':  validatenull(This) || validatenull(This.company) ? '' : This.company, // 来访人公司名称
+
         'purpose': '', // 到访目的
         'people': '', // 随行人
         'article': '', // 随行物品

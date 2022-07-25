@@ -4,7 +4,7 @@
     <van-form ref="form" @submit="onSubmit" style="background: #fff">
       <van-field required v-model="form.username" disabled name="username" label="用户名" placeholder="用户名"  />
       <van-field required v-model="form.nickname" name="nickname" label="昵称"  placeholder="昵称" :rules="[{ required: true, message: '请输入昵称' }]" />
-      <van-field required v-model="form.company" name="company" label="公司"  placeholder="公司" :rules="[{ required: false, message: '请输入公司' }]" />
+      <van-field required v-model="form.company" name="company" label="公司"  placeholder="公司" :rules="[{ required: true, message: '请输入公司' }]" />
       <van-field required v-model="form.phone" type="tel" name="phone" label="电话" placeholder="电话" :rules="[{ required: true, message: '请输入电话' }]" />
       <van-field required v-model="form.email" name="email" label="邮箱"  placeholder="邮箱" :rules="[{ required: true, message: '请输入邮箱' }]" />
       <van-field  v-model="form.address" name="address" label="地址"  placeholder="地址" />

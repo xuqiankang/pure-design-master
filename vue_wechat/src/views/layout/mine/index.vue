@@ -22,8 +22,8 @@
             </van-row>
             <div class="homepage-qr">
               <div class="homepage-tag" v-if="currentUser.role == '2'">访客</div>
-              <div class="homepage-tag" v-if="currentUser.role == '1'">公司管理员</div>
-              <div class="homepage-tag" v-if="currentUser.role == '0'">超级管理员</div>
+              <div class="homepage-tag" style="background: #2bc107" v-if="currentUser.role == '1'">公司管理员</div>
+              <div class="homepage-tag" style="background: #ee0a24" v-if="currentUser.role == '0'">超级管理员</div>
               <van-image fit="cover" :src="qr" />
             </div>
           </div>
@@ -34,7 +34,13 @@
          <div style="margin:12px 8px; border-radius: 10px;overflow: hidden;">
             <van-cell to="/personal" icon="label-o" color="#6D7884" title="个人信息" is-link />
             <van-cell to="/password" icon="label-o" color="#2A67FE" title="修改密码" is-link />
-            <van-cell to="/authorized" icon="label-o" color="#F9C95E" title="认证管理员" is-link />
+
+            <van-cell v-if="currentUser.role == 2" :to="currentUser.appay == '1' ? '' : '/authorized'" icon="label-o" color="#F9C95E"  :is-link="currentUser.appay != '1'">
+              <template #title>
+                <span class="custom-title">认证管理员</span>
+                <van-tag type="danger" v-if="currentUser.appay == '1'">审核中</van-tag>
+              </template>
+            </van-cell>
           </div>
       </div>
 
@@ -46,7 +52,8 @@
 <script>
 import qr from '@/assets/images/qrcode.jpeg'
 import BaseUI from '@/views/components/baseUI'
-import { removeSessionToken, removeToken } from "@/utils/uToken";
+import { removeSessionToken, removeToken,setSessionToken,getToken } from "@/utils/uToken";
+import { getUser } from '@/api/wechatApi.js'
 export default {
   name: 'homepage',
   extends: BaseUI,
@@ -62,6 +69,12 @@ export default {
     }
   },
   created() {
+    this.getUser().then(res => {
+      res.data.token = getToken('token')
+      // res.data.appay = 1
+      setSessionToken('currentUser', res.data)
+    }).catch(()=> {
+    })
   },
   mounted(){
   },
@@ -71,7 +84,11 @@ export default {
       removeToken('token')
       this.$toast.success("退出成功")
       this.$router.replace('/login')
-    }
+    },
+    async getUser() {
+      let user = await getUser(this.currentUser.username)
+      return user
+    },
   }
 }
 </script>
