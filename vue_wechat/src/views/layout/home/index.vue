@@ -62,7 +62,7 @@
 
              <van-col :span="12" >
               <router-link to="/check">
-                <div class="myCardlink-not" :style="{background: '#ee0a24'}">审核</div>
+                <div class="myCardlink-not" :style="{background: '#ee0a24'}">认证信息审核</div>
               </router-link>
             </van-col>
           </van-row>

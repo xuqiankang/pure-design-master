@@ -11,8 +11,8 @@
       </div>
 
        <div class="scroll">
-        <div v-for="(item, index) in list" :key="index" class="listCard-fill">
-          <div class="listCard-fill-content">
+        <div v-if="list && list.lngth > 0"  class="listCard-fill">
+          <div class="listCard-fill-content" v-for="(item, index) in list" :key="index">
             <div class="listCard-fill-box">
               <van-row type="flex" align="center" style="height: 100%;">
                 <van-col :span="16">
@@ -25,9 +25,9 @@
                     <van-tag v-if="item.status == 5" type="7232dd" size="medium" style="margin: 2px 4px">已过期</van-tag>
                  </div>
 
-                  <div>到访公司:{{item.visitCompany}}</div>
-                  <div>管理员:{{item.visitAdmin}}</div>
-                  <div> 到访日期:{{getTime(item)}}</div>
+                  <div>到访公司: {{ item.visitCompany}}</div>
+                  <div>管理员: {{ item.visitAdmin}}</div>
+                  <div> 到访日期: {{ getTime(item)}}</div>
                 </van-col>
                 <van-col :span="8">
                   <van-button size="mini" type="info" round color="#FFA94F"  @click="open(item, 'user')"> 查看 </van-button>
@@ -36,6 +36,7 @@
             </div>
           </div>
         </div>
+        <van-empty v-else description="暂无最新数据!" />
       </div>
     </div>
   </div>

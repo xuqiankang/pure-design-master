@@ -80,7 +80,18 @@ export const getApply = () =>
     url: '/user/getApply',
     method: 'get'
   })
-
+// 管理员 修改认证单
+export const updateApply = (apply, id) => 
+  request({
+    url: '/user/updateApply/' + apply + '/' + id,
+    method: 'get'
+  })
+// 管理员 移除认证单
+export const deleteApply = (id) => 
+  request({
+    url: '/user/deleteApply/' + id,
+    method: 'get'
+  })
 
 
 

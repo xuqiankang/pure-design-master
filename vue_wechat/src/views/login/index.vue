@@ -1,21 +1,29 @@
 <template>
     <div class="homepage">
-      <van-nav-bar  title="登录" left-arrow @click-left="goBack" />
       <div class="content-wrapper">
-        <van-form ref="form" @submit="onSubmit" style="background: #fff">
+        <van-tabs v-model="active" @change="changetabs">
+          <van-tab title="登录" name="1"></van-tab>
+          <van-tab title="注册" name="0"></van-tab>
+        </van-tabs>
+        <van-form ref="form" @submit="onSubmit" style="background: #fff" v-if="active == 1">
           <van-cell-group>
-            <van-field required v-model="loginForm.username" name="username" label="用户名"  placeholder="用户名" :rules="[{ required: true, message: '请输入用户名' }]" />
+            <van-field required v-model="loginForm.username" name="username" label="账号"  placeholder="账号" :rules="[{ required: true, message: '请设置账号' }]" />
             <van-field required v-model="loginForm.password" name="password" label="密码"  placeholder="密码" :rules="[{ required: true, message: '请输入密码' }]"  type="password" />
           </van-cell-group>
+          <div style="margin: 10px;">
+            <van-button round block type="info" native-type="submit">登录</van-button>
+          </div>
+        </van-form>
 
-          <!-- <van-field name="checkboxGroup" class="radioField" label="" :border="false"  :rules="[{ required: true, message: '请选择' }]">
-            <template #input>
-              <van-radio-group v-model="loginForm.radio" style="margin: 10px" required>
-                <van-radio name="1" icon-size="14px"><span style="color: #747474;">未注册的账号验证后将自动创建账号</span></van-radio>
-              </van-radio-group>
-            </template>
-          </van-field> -->
-
+        <van-form ref="form" @submit="onSubmit" style="background: #fff" v-else>
+          <van-cell-group>
+            <van-field required v-model="registerForm.username" name="username" label="账号"  placeholder="账号" :rules="[{ required: true, message: '请设置账号' }]" />
+            <van-field required v-model="registerForm.nickname" name="nickname" label="昵称"  placeholder="昵称" :rules="[{ required: true, message: '请输入昵称' }]"  />
+            <van-field required v-model="registerForm.phone" name="phone" label="号码"  placeholder="号码" :rules="[{ required: true, message: '请输入号码' }]"  />
+            <van-field required v-model="registerForm.password" name="password" label="密码"  placeholder="密码" :rules="[{ required: true, message: '请输入密码' }]"  type="password" />
+            <van-field required v-model="registerForm.confirmPassword" name="password" label="确认密码"  placeholder="确认密码" :rules="[{ required: true, message: '请确认密码' }]"  type="password" />
+          
+          </van-cell-group>
           <div style="margin: 10px;">
             <van-button round block type="info" native-type="submit">登录</van-button>
           </div>
@@ -25,25 +33,46 @@
 </template>
 <script>
 import { setSessionToken, setToken } from "@/utils/uToken";
-import { login } from '@/api/wechatApi.js'
+import { login ,saveAdmin} from '@/api/wechatApi.js'
 import BaseUI from '@/views/components/baseUI'
 export default {
     extends: BaseUI,
     name: "login",
     data() {
         return {
-          loginForm: {
-            // radio: '',
-            username: '',
-            password: ''
-          },
+          active: '1',
+          loginForm: this.initregisterForm(),
+          registerForm: this.initregisterForm()
         }
     },
     mounted() {
     },
     methods: {
-      onSubmit() {
-        this.setLoad()
+      makeregister() {
+        if (this.registerForm.password !== this.registerForm.confirmPassword) {
+          this.$toast.fail("2次输入的新密码不相同")
+          return false
+        }
+        saveAdmin(this.registerForm)
+          .then(responseData => {
+            if(responseData.code == 200) {
+              this.$dialog.alert({
+                message: '注册成功,去登录',
+              }).then(() => {
+                this.loginForm = this.initregisterForm()
+                this.registerForm = this.initregisterForm()
+                this.active = 1
+              });
+            } else {
+              this.$toast.fail(responseData.msg)
+            }
+            this.resetLoad()
+          })
+          .catch(error => {
+            this.resetLoad()
+        })
+      },
+      makelogin() {
         login(this.loginForm)
           .then(responseData => {
             if(responseData.code == 200) {
@@ -59,6 +88,30 @@ export default {
           .catch(error => {
             this.resetLoad()
         })
+      },
+      onSubmit() {
+        this.setLoad()
+        if (this.active == 1) {
+          this.makelogin()
+        } else {
+          this.makeregister()
+        }
+      },
+      initregisterForm() {
+        return {
+          'username': '',
+          'password': ''
+        }
+      },
+      initloginForm() {
+        return {
+          'role': '2',
+          'username': '',
+          'nickname': '',
+          'phone':'',
+          'password': '',
+          'confirmPassword': '',
+        }
       }
     }
 }

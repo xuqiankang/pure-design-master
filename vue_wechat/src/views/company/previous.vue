@@ -4,8 +4,8 @@
     <van-nav-bar title="往期来访" left-arrow @click-left="goBack" />
     <div class="page-container">
        <div class="scroll">
-        <div v-for="(item, index) in list" :key="index" class="listCard-fill">
-          <div class="listCard-fill-content">
+        <div class="listCard-fill" v-if="list && list.lngth > 0">
+          <div class="listCard-fill-content" v-for="(item, index) in list" :key="index" >
             <div class="listCard-fill-box">
               <van-row type="flex" align="center" style="height: 100%;">
                 <van-col :span="16">
@@ -27,6 +27,7 @@
             </div>
           </div>
         </div>
+        <van-empty v-else description="暂无最新数据!" />
       </div>
     </div>
   </div>

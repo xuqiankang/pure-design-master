@@ -18,7 +18,7 @@
 
 <script>
 import BaseUI from '@/views/components/baseUI'
-import { getUser, editUser } from '@/api/wechatApi.js'
+import { getUser, saveAdmin } from '@/api/wechatApi.js'
 import { getToken, setSessionToken } from "@/utils/uToken";
 export default {
   name: 'personal',
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      editUser(this.form).then(responseData => {
+      saveAdmin(this.form).then(responseData => {
           if(responseData.code == 200) {
             this.getUser().then(res => {
               res.token = getToken('token')

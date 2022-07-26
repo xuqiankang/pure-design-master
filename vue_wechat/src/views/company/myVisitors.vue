@@ -4,8 +4,8 @@
     <van-nav-bar title="我的来访" left-arrow @click-left="goBack" />
     <div class="page-container">
        <div class="scroll">
-        <div v-for="(item, index) in list" :key="index" class="listCard-fill">
-          <div class="listCard-fill-content">
+        <div v-if="list && list.lngth > 0"  class="listCard-fill">
+          <div class="listCard-fill-content" v-for="(item, index) in list" :key="index">
             <div class="listCard-fill-box">
               <van-row type="flex" align="center" style="height: 100%;">
                 <van-col :span="16">
@@ -16,10 +16,10 @@
                     <van-tag v-if="item.status == 4" type="danger" size="medium" style="margin: 2px 4px">已拒绝</van-tag>
                     <van-tag v-if="item.status == 5" type="7232dd" size="medium" style="margin: 2px 4px">已过期</van-tag>
                   </div>
-                  <div>来访人名称:{{item.visitCompany}}</div>
-                  <div>来访人电话:{{item.phone}}</div>
-                  <div>来访事由:{{item.purpose}}</div>
-                  <div>来访日期:{{getTime(item)}}</div>
+                  <div>来访人名称: {{ item.visitCompany}}</div>
+                  <div>来访人电话: {{ item.phone}}</div>
+                  <div>来访事由: {{ item.purpose}}</div>
+                  <div>来访日期: {{ getTime(item)}}</div>
                 </van-col>
                 <van-col :span="8">
                   <van-button size="mini" type="info" round color="#FFA94F" @click="open(item, 'company')"> 查看 </van-button>
@@ -28,6 +28,7 @@
             </div>
           </div>
         </div>
+        <van-empty v-else description="暂无最新数据!" />
       </div>
     </div>
   </div>
