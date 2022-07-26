@@ -8,13 +8,13 @@
             <van-field required v-model="loginForm.password" name="password" label="密码"  placeholder="密码" :rules="[{ required: true, message: '请输入密码' }]"  type="password" />
           </van-cell-group>
 
-          <van-field name="checkboxGroup" class="radioField" label="" :border="false"  :rules="[{ required: true, message: '请选择' }]">
+          <!-- <van-field name="checkboxGroup" class="radioField" label="" :border="false"  :rules="[{ required: true, message: '请选择' }]">
             <template #input>
               <van-radio-group v-model="loginForm.radio" style="margin: 10px" required>
                 <van-radio name="1" icon-size="14px"><span style="color: #747474;">未注册的账号验证后将自动创建账号</span></van-radio>
               </van-radio-group>
             </template>
-          </van-field>
+          </van-field> -->
 
           <div style="margin: 10px;">
             <van-button round block type="info" native-type="submit">登录</van-button>
@@ -33,7 +33,7 @@ export default {
     data() {
         return {
           loginForm: {
-            radio: '',
+            // radio: '',
             username: '',
             password: ''
           },
@@ -43,12 +43,8 @@ export default {
     },
     methods: {
       onSubmit() {
-        let uer = {
-          username: this.loginForm.username,
-          password: this.loginForm.password
-        }
         this.setLoad()
-        login(uer)
+        login(this.loginForm)
           .then(responseData => {
             if(responseData.code == 200) {
               setSessionToken('currentUser', responseData.data)

@@ -2,7 +2,7 @@
 @import './pop.scss';
 #app {
   font-size: 14px;
-  background-color: rgb(246, 248, 251);
+  background-color: #ebedf0;
   @include app-font()
 }
 .page-container {
@@ -54,8 +54,9 @@
 
 // 白蓝背景渐变 列表样式 背景
 .listCard-fill-content {
-  height: 2.7rem;
-  width: 100%;
+  margin: 4px;
+  border-radius: 10px;
+  height: 3.4rem;
   padding-left: 0.4rem;
   position: relative;
   background: linear-gradient(to bottom right,white, 85%, #69d3ff);

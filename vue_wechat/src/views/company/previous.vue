@@ -1,54 +1,41 @@
 <template>
+<!-- 我的预约 -->
   <div class="myReservation">
     <van-nav-bar title="往期来访" left-arrow @click-left="goBack" />
     <div class="page-container">
-      <div class="headerFiex">
-        <van-tabs v-model="reservationActive" @change="changetabs">
-          <van-tab title="待确认" name="1"></van-tab>
-          <van-tab title="已确认" name="2"></van-tab>
-          <van-tab title="已结束" name="3"></van-tab>
-        </van-tabs>
-        <van-search v-model.trim="value" placeholder="请输入搜索关键词" shape="round" @input="onSearch()" />
-      </div>
-
        <div class="scroll">
-        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <van-list
-            :immediate-check="false"
-            v-model="loadings"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="onLoad"
-          >
-            <div v-for="(reservationItem,index) in reservationList" :key="index" class="listCard-fill">
-              <div class="listCard-fill-content" @click="openQrcode(reservationItem)">
-
-
-                <div class="listCard-fill-box">
-                  <van-row type="flex" align="center" style="height: 100%;">
-                    <van-col :span="16">
-                      <div class="listCard-fill-title">租户名称/{{reservationItem.name}}</div>
-                      <div style="padding-top:5px"> {{reservationItem.address}}</div>
-                      <div> 到访日期:{{reservationItem.visitorDate}}</div>
-                    </van-col>
-                    <van-col :span="8">
-                      <van-button v-if="reservationItem.state == '001' || reservationItem.state == '002'" size="mini" type="info" round color="#FFA94F">取消</van-button>
-                      <van-button v-else size="mini" type="info" round color="#FFA94F"> 再次预约 </van-button>
-                    </van-col>
-                  </van-row>
-                </div>
-              </div>
+        <div v-for="(item, index) in list" :key="index" class="listCard-fill">
+          <div class="listCard-fill-content">
+            <div class="listCard-fill-box">
+              <van-row type="flex" align="center" style="height: 100%;">
+                <van-col :span="16">
+                  <div class="listCard-fill-title">
+                    <span>来访人名称:{{item.visitCompany}}</span>
+                    <van-tag v-if="item.status == 2" type="warning" size="medium" style="margin: 2px 4px">待审核</van-tag>
+                    <van-tag v-if="item.status == 3" type="success" size="medium" style="margin: 2px 4px">已审核</van-tag>
+                    <van-tag v-if="item.status == 4" type="danger" size="medium" style="margin: 2px 4px">已拒绝</van-tag>
+                    <van-tag v-if="item.status == 5" type="7232dd" size="medium" style="margin: 2px 4px">已过期</van-tag>
+                  </div>
+                  <div>来访人电话:{{item.phone}}</div>
+                  <div>来访事由:{{item.purpose}}</div>
+                  <div>来访日期:{{getTime(item)}}</div>
+                </van-col>
+                <van-col :span="8">
+                  <van-button size="mini" type="info" round color="#FFA94F" @click="open(item, 'company')"> 查看 </van-button>
+                </van-col>
+              </van-row>
             </div>
-          </van-list>
-        </van-pull-refresh>
+          </div>
+        </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import { getOrderInfo } from '@/api/wechatApi.js'
 import BaseUI from '@/views/components/baseUI'
+import {validatenull} from '@/utils/validate'
 export default {
   name: 'myReservation',
   extends: BaseUI,
@@ -56,98 +43,51 @@ export default {
   },
   data() {
     return {
-      reservationActive: '1',
-      value: '',
-      loadings: false,
-      finished: false,
-      refreshing: false,
-      reservationList: [],
-      search: {
-        params: [],    
-        offset: 0,
-        limit: 10,
-        orderby: ''
-      },
-      bakList: [
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '002'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '003'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '005'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '004'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '001'},
-        { name: '管理方公司', address: '园区-楼宇-楼层-房间', visitorDate: '2022-04-30', state: '006'},
-      ]
+      list: [],
     }
   },
   created() {
-    this.onSearch()
+    this.getlist();
   },
   methods: {
-    // 切换时
-    changetabs() {
-      this.reservationList = []
-      this.onSearch()
-    },
-    onRefresh() {
-      this.finished = false;
-      this.loadings = true;
-      this.onSearch();
-    },
-    // 查询
-    onSearch() {
-      this.reservationList = []
-      this.search.offset = 0
-      this.currentPage = 1
-      this.onLoad()
-    },
-    onLoad() {
-      this.getreservationList();
-      // this.currentPage += 1;// 页数+1
-      // this.search.offset = this.currentPage * this.search.limit
-    },
-    onRefresh() {
-      this.finished = false;
-      this.loadings = true;
-      this.onSearch();
-    },
-    getreservationList() {
-      this.$nextTick(() => {
-
-        if (this.refreshing) {
-          this.reservationList = [];
-          this.refreshing = false;
-        }
-        // 测试页面效果
-        let bakList = []
-        bakList = this.bakList.filter(item => {
-          if (this.reservationActive == 1) {
-            return item.state == '001'
-          } else if (this.reservationActive == 2) {
-            return item.state == '002'
-          } else {
-            return item.state != '002' && item.state != '001'
-          }
-        })
-
-        this.reservationList = [...bakList]
-        this.loadings = false;
-        if (this.bakList.length < 20) {  //数据加载完成
-          this.finished = true;
-        } else {
-          this.finished= false
+    // 查看
+    open(val, type) {
+      this.$router.push({
+        name: 'visitorsForm',
+        query: {
+          form: val,
+          type
         }
       })
+    },
+    getTime(val) { 
+      if (!validatenull(val)) return 
+      return val.time.slice(0,10)
+    },
+    getlist() {
+      this.list = []
+      getOrderInfo(this.currentUser.username).then(res => {
+        if(res.data.data instanceof Array) {
+          this.$nextTick(() => {
+            let list = [...this.list, ...res.data.data]
+            list = list.filter(item => item.status != 2 && item.status != 1)
+            this.list = list
+          })
+        } else {
+          this.showMessage(responseData)
+        }
+        this.resetLoad()
+      }).catch(error => {
+        this.resetLoad()
+        this.outputError(error)
+      })
     }
-
   }
 }
 </script>
 
 <style lang="scss" scoped>
-/deep/ .van-search {
-  padding: 0.12rem 0.32rem;
+.scroll {
+  margin-bottom:  20px;
 }
 </style>
