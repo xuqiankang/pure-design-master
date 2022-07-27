@@ -11,7 +11,7 @@
       </div>
 
        <div class="scroll">
-        <div v-if="list && list.lngth > 0"  class="listCard-fill">
+        <div v-if="list && list.length > 0"  class="listCard-fill">
           <div class="listCard-fill-content" v-for="(item, index) in list" :key="index">
             <div class="listCard-fill-box">
               <van-row type="flex" align="center" style="height: 100%;">
@@ -22,7 +22,7 @@
                     <van-tag v-if="item.status == 2" type="warning" size="medium" style="margin: 2px 4px">待审核</van-tag>
                     <van-tag v-if="item.status == 3" type="success" size="medium" style="margin: 2px 4px">已通过</van-tag>
                     <van-tag v-if="item.status == 4" type="danger" size="medium" style="margin: 2px 4px">未通过</van-tag>
-                    <van-tag v-if="item.status == 5" type="7232dd" size="medium" style="margin: 2px 4px">已过期</van-tag>
+                    <van-tag v-if="item.status == 5" type="danger" size="medium" style="margin: 2px 4px">已过期</van-tag>
                  </div>
 
                   <div>到访公司: {{ item.visitCompany}}</div>

@@ -4,7 +4,7 @@
     <van-nav-bar title="认证信息审核" left-arrow @click-left="goBack" />
     <div class="page-container">
       <div class="scroll">
-          <div v-if="list && list.lngth > 0" class="listCard-fill">
+          <div v-if="list && list.length > 0" class="listCard-fill">
             <div class="listCard-fill-content" v-for="(item, index) in list" :key="index" >
               <div class="listCard-fill-box">
                 <van-row type="flex" align="center" style="height: 100%;">
@@ -60,8 +60,9 @@ export default {
         this.list = []
         if(res.data instanceof Array) {
           this.$nextTick(() => {
-            this.list = [...this.list, ...res.data]
-            this.list = this.list.filter(item => item.apply != 2)
+            this.list = res.data
+            this.list = this.list.filter(item => item.apply == 1)
+            console.log(this.list);
           })
         } else {
           this.showMessage(responseData)

@@ -17,5 +17,11 @@ export default [
     name: 'check',
     component: _import('admin/check'),
     meta: { title: '审核'}
+  },
+  {
+    path: '/deleUser',
+    name: 'deleUser',
+    component: _import('admin/deleUser'),
+    meta: { title: '用户信息管理'}
   }
 ]

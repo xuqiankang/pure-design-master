@@ -25,7 +25,7 @@
           
           </van-cell-group>
           <div style="margin: 10px;">
-            <van-button round block type="info" native-type="submit">登录</van-button>
+            <van-button round block type="info" native-type="submit">注册</van-button>
           </div>
         </van-form>
       </div>
@@ -33,7 +33,7 @@
 </template>
 <script>
 import { setSessionToken, setToken } from "@/utils/uToken";
-import { login ,saveAdmin} from '@/api/wechatApi.js'
+import { login ,register} from '@/api/wechatApi.js'
 import BaseUI from '@/views/components/baseUI'
 export default {
     extends: BaseUI,
@@ -42,7 +42,7 @@ export default {
         return {
           active: '1',
           loginForm: this.initregisterForm(),
-          registerForm: this.initregisterForm()
+          registerForm: this.initloginForm()
         }
     },
     mounted() {
@@ -53,7 +53,7 @@ export default {
           this.$toast.fail("2次输入的新密码不相同")
           return false
         }
-        saveAdmin(this.registerForm)
+        register(this.registerForm)
           .then(responseData => {
             if(responseData.code == 200) {
               this.$dialog.alert({

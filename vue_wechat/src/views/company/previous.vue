@@ -4,18 +4,19 @@
     <van-nav-bar title="往期来访" left-arrow @click-left="goBack" />
     <div class="page-container">
        <div class="scroll">
-        <div class="listCard-fill" v-if="list && list.lngth > 0">
+        <div class="listCard-fill" v-if="list && list.length > 0">
           <div class="listCard-fill-content" v-for="(item, index) in list" :key="index" >
             <div class="listCard-fill-box">
               <van-row type="flex" align="center" style="height: 100%;">
                 <van-col :span="16">
                   <div class="listCard-fill-title">
-                    <span>来访人名称:{{item.visitCompany}}</span>
+                    预约单状态:
                     <van-tag v-if="item.status == 2" type="warning" size="medium" style="margin: 2px 4px">待审核</van-tag>
                     <van-tag v-if="item.status == 3" type="success" size="medium" style="margin: 2px 4px">已审核</van-tag>
                     <van-tag v-if="item.status == 4" type="danger" size="medium" style="margin: 2px 4px">已拒绝</van-tag>
-                    <van-tag v-if="item.status == 5" type="7232dd" size="medium" style="margin: 2px 4px">已过期</van-tag>
+                    <van-tag v-if="item.status == 5" type="danger" size="medium" style="margin: 2px 4px">已过期</van-tag>
                   </div>
+                  <div>来访人名称:{{item.visitCompany}}</div>
                   <div>来访人电话:{{item.phone}}</div>
                   <div>来访事由:{{item.purpose}}</div>
                   <div>来访日期:{{getTime(item)}}</div>
@@ -73,6 +74,7 @@ export default {
             let list = [...this.list, ...res.data.data]
             list = list.filter(item => item.status != 2 && item.status != 1)
             this.list = list
+            console.log(this.list);
           })
         } else {
           this.showMessage(responseData)

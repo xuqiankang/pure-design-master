@@ -26,6 +26,7 @@ export default {
   methods: {
     onSubmit() {
       this.form.apply = '1'
+      this.form.role = '1'
       saveAdmin(this.form).then(responseData => {
           if(responseData.code == 200) {
             this.$toast.success("提交成功")

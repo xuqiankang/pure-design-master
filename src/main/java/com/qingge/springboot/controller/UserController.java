@@ -140,6 +140,13 @@ public class UserController {
         return Result.success(users);
     }
 
+    @GetMapping("/getAllInfoList")
+    public Result getAllInfoList() {
+        List<User> users = userService.getAllInfoList();
+        return Result.success(users);
+    }
+
+
     @GetMapping("/getApply")
     public Result getApply() {
         List<User> users = userService.getApply();

@@ -85,6 +85,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    public List<User> getAllInfoList() {
+        return userMapper.getAllInfoList();
+    }
+
+
+    @Override
     public List<User> getApply() {
         return userMapper.getApply();
     }

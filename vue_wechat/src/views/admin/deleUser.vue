@@ -10,18 +10,17 @@
               <van-row type="flex" align="center" style="height: 100%;">
                 <van-col :span="20">
                 <div>
-                  认证状态:
-                  <van-tag v-if="item.apply == 1" type="danger" size="medium" style="margin: 2px 4px">待审核</van-tag>
-                  <van-tag v-if="item.apply == 2" type="warning" size="medium" style="margin: 2px 4px">审核通过</van-tag>
-                  <van-tag v-if="item.apply == 3" type="success" size="medium" style="margin: 2px 4px">已拒绝</van-tag>
+                  用户权限:
+                  <van-tag v-if="item.role == 1" type="danger" size="medium" style="margin: 2px 4px">管理员</van-tag>
+                  <van-tag v-if="item.role == 2" type="warning" size="medium" style="margin: 2px 4px">游客</van-tag>
                 </div>
-                <div>认证人账号: {{ item.username}}</div>
-                <div>认证人名称: {{ item.nickname}}</div>
-                <div>认证人电话: {{ item.phone}}</div>
-                <div>认证人公司: {{ item.company}}</div>
+                <div>用户账号: {{ item.username}}</div>
+                <div>用户名称: {{ item.nickname}}</div>
+                <div>用户电话: {{ item.phone}}</div>
+                <div>用户公司: {{ item.company}}</div>
                 </van-col>
                 <van-col :span="4">
-                  <van-button @click="deleteApplys(null, item.id)" size="mini" type="danger" round >移除</van-button>
+                  <van-button @click="deleteApplys( item.id)" size="mini" type="danger" round >移除</van-button>
                 </van-col>
               </van-row>
             </div>
@@ -36,10 +35,10 @@
 </template>
 
 <script>
-import { deleteApply, getApply,updateApply } from '@/api/wechatApi.js'
+import { deleteApply, getAllInfoList,updateApply } from '@/api/wechatApi.js'
 import BaseUI from '@/views/components/baseUI'
 export default {
-  name: 'check',
+  name: 'deleUser',
   extends: BaseUI,
   components: {
   },
@@ -53,15 +52,12 @@ export default {
   },
   methods: {
     getlist() {
-      let parms = {
-        username: this.currentUser.username
-      }
-      getApply(parms).then(res => {
+      getAllInfoList().then(res => {
         this.list = []
         if(res.data instanceof Array) {
           this.$nextTick(() => {
             this.list = [...this.list, ...res.data]
-            this.list = this.list.filter(item => item.apply != 1 && item.apply != 'null')
+            this.list = this.list.filter(item => item.id != 1 )
           })
         } else {
           this.showMessage(responseData)
@@ -72,8 +68,8 @@ export default {
         this.outputError(error)
       })
     },
-    deleteApplys(apply, id) {
-      updateApply(apply, id).then(res => {
+    deleteApplys(id) {
+      deleteApply(id).then(res => {
         if(res.code == 200) {
           this.$toast.success('操作成功')
           this.getlist()
@@ -86,21 +82,6 @@ export default {
         this.outputError(error)
       })
     },
-    
-    // deleteApplys(id) {
-    //   deleteApply(id).then(res => {
-    //     if(res.code == 200) {
-    //       this.$toast.success('操作成功')
-    //       this.getlist()
-    //     } else {
-    //       this.showMessage(responseData)
-    //     }
-    //     this.resetLoad()
-    //   }).catch(error => {
-    //     this.resetLoad()
-    //     this.outputError(error)
-    //   })
-    // },
   }
 }
 </script>

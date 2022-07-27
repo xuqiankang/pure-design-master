@@ -26,8 +26,11 @@ public interface UserMapper extends BaseMapper<User> {
 
     Page<User> findPage(Page<User> page, @Param("username") String username, @Param("email") String email, @Param("address") String address);
 
-    @Select("select * from sys_user where apply is null ")
+    @Select("select * from sys_user  where  role = '1' AND (apply ='2' or apply is  null) and company is not null")
     List<User> getInfoList();
+
+    @Select("select * from sys_user  where role !='0' ")
+    List<User> getAllInfoList();
 
     @Select("select * from sys_user where apply is not null")
     List<User> getApply();

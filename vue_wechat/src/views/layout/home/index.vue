@@ -48,25 +48,27 @@
             </van-col>
           </van-row>
            <van-row gutter="16"  v-if="currentUser.role == '0'">
-             <van-col :span="24" >
-              <router-link to="/addAdmin">
-                <div class="myCardlink-not" :style="{background: '#1989fa', padding: '0.4rem'}">新建管理员</div>
-              </router-link>
-            </van-col>
-
             <van-col :span="12" >
-              <router-link to="/dele">
-                <div class="myCardlink-not" :style="{background: '#071ac1'}">信息维护</div>
+              <router-link to="/addAdmin">
+                <div class="myCardlink-not" :style="{background: '#1989fa'}">新建管理员</div>
               </router-link>
             </van-col>
-
              <van-col :span="12" >
               <router-link to="/check">
-                <div class="myCardlink-not" :style="{background: '#ee0a24'}">认证信息审核</div>
+                <div class="myCardlink-not" :style="{background: '#ee0a24'}">审核管理员</div>
+              </router-link>
+            </van-col>
+            <van-col :span="12" >
+              <router-link to="/dele">
+                <div class="myCardlink-not" :style="{background: '#071ac1'}">管理员信息维护</div>
+              </router-link>
+            </van-col>
+            <van-col :span="12" >
+              <router-link to="/deleUser">
+                <div class="myCardlink-not" :style="{background: '#071ac1'}">用户信息维护</div>
               </router-link>
             </van-col>
           </van-row>
-
         </div>
       </div>
     </div>

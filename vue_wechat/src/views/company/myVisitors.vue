@@ -4,17 +4,17 @@
     <van-nav-bar title="我的来访" left-arrow @click-left="goBack" />
     <div class="page-container">
        <div class="scroll">
-        <div v-if="list && list.lngth > 0"  class="listCard-fill">
+        <div v-if="list && list.length > 0"  class="listCard-fill">
           <div class="listCard-fill-content" v-for="(item, index) in list" :key="index">
             <div class="listCard-fill-box">
               <van-row type="flex" align="center" style="height: 100%;">
                 <van-col :span="16">
                   <div>
                     预约单状态:
-                    <van-tag v-if="item.status == 2" type="warning" size="medium" style="margin: 2px 4px">待审核</van-tag>
-                    <van-tag v-if="item.status == 3" type="success" size="medium" style="margin: 2px 4px">已审核</van-tag>
-                    <van-tag v-if="item.status == 4" type="danger" size="medium" style="margin: 2px 4px">已拒绝</van-tag>
-                    <van-tag v-if="item.status == 5" type="7232dd" size="medium" style="margin: 2px 4px">已过期</van-tag>
+                    <van-tag v-if="item.status == '2'" type="warning" size="medium" style="margin: 2px 4px">待审核</van-tag>
+                    <van-tag v-if="item.status == '3'" type="success" size="medium" style="margin: 2px 4px">已审核</van-tag>
+                    <van-tag v-if="item.status == '4'" type="danger" size="medium" style="margin: 2px 4px">已拒绝</van-tag>
+                    <van-tag v-if="item.status == '5'" type="danger" size="medium" style="margin: 2px 4px">已过期</van-tag>
                   </div>
                   <div>来访人名称: {{ item.visitCompany}}</div>
                   <div>来访人电话: {{ item.phone}}</div>

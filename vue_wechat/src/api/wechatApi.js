@@ -7,6 +7,13 @@ export const login = (data) =>
       method: 'post',
       data
   })
+// 注册
+export const register = (data) =>
+  request({
+      url: '/user/registerNewUser',
+      method: 'post',
+      data
+  })
 
 // 修改密码
 export const password = (data) =>
@@ -46,6 +53,13 @@ export const getInfoList = () =>
     method: 'get'
   })
 
+// 查询所有用户 非超管
+export const getAllInfoList = () => 
+  request({
+    url: '/user/getAllInfoList',
+    method: 'get'
+  })
+  
 // 新增、更新预约表单
 export const saveForm = (data) => 
   request({

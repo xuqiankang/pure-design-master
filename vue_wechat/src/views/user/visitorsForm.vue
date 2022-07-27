@@ -15,7 +15,7 @@
             <van-tag v-if="bizFormModel.status == 2" type="warning" size="medium" style="margin: 2px 4px">待审核</van-tag>
             <van-tag v-if="bizFormModel.status == 3" type="success" size="medium" style="margin: 2px 4px">{{type == 'company' ? '已审核' : '已通过'}}</van-tag>
             <van-tag v-if="bizFormModel.status == 4" type="danger" size="medium" style="margin: 2px 4px">{{type == 'company' ? '已拒绝' : '未通过'}}</van-tag>
-            <van-tag v-if="bizFormModel.status == 5" type="7232dd" size="medium" style="margin: 2px 4px">已过期</van-tag>
+            <van-tag v-if="bizFormModel.status == 5" type="danger" size="medium" style="margin: 2px 4px">已过期</van-tag>
           </span>
        </div>
         <van-field :readonly="enable" disabled v-model="bizFormModel.name" label="账号" name="name" placeholder="账号"  />
@@ -176,13 +176,15 @@ export default {
       getInfoList().then(responseData => {
           if(responseData.code == 200) {
             this.allList = responseData.data
-            this.companyList = this.allList.filter(item => item.role == 1)
-            this.companyList = this.companyList.reduce(function (tempArr, item) {
+            console.log(this.companyList);
+            this.companyList = this.allList.reduce(function (tempArr, item) {
                 if (tempArr.findIndex((ele) => ele.company === item.company) === -1) {
                     tempArr.push(item)
                 }
                 return tempArr
             }, [])
+
+            console.log(this.companyList);
           } else {
             this.$toast.fail(responseData.msg)
           }

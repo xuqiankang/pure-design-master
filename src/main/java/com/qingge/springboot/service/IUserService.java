@@ -28,6 +28,8 @@ public interface IUserService extends IService<User> {
 
     List<User> getInfoList();
 
+    List<User> getAllInfoList();
+
     List<User> getApply();
 
     void updateApplyById(String apply, String id);
