@@ -55,6 +55,20 @@ public class UserController {
         return Result.success(userService.register(userDTO));
     }
 
+    @PostMapping("/registerNewUser")
+    public Result registerNewUser(@RequestBody User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        if (StrUtil.isBlank(username) || StrUtil.isBlank(password)) {
+            return Result.error(Constants.CODE_400, "参数错误");
+        }
+        User ifExist = userService.registerNewUser(user);
+        if (ifExist != null) {
+            return Result.error(Constants.CODE_700, "账户已存在");
+        }
+        return Result.success(userService.saveOrUpdate(user));
+    }
+
     // 新增或者更新
     @PostMapping("/username/save")
     public Result save(@RequestBody User user) {

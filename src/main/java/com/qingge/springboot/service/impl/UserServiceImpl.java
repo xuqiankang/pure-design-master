@@ -99,6 +99,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userMapper.deleteApplyById(id);
     }
 
+    @Override
+    public User registerNewUser(User user) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", user.getUsername());
+        User one;
+        try {
+            one = getOne(queryWrapper); // 从数据库查询用户信息
+        } catch (Exception e) {
+            LOG.error(e);
+            throw new ServiceException(Constants.CODE_500, "系统错误");
+        }
+        return one;
+    }
+
     private User getUserInfo(UserDTO userDTO) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", userDTO.getUsername());

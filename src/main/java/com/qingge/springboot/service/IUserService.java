@@ -33,4 +33,6 @@ public interface IUserService extends IService<User> {
     void updateApplyById(String apply, String id);
 
     void deleteById(String id);
+
+    User registerNewUser(User user);
 }
