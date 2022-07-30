@@ -21,29 +21,29 @@
         </div>
 
         <div class="myCard-not">
-          <van-row gutter="16" v-if="currentUser.role == '2'" >
-            <van-col :span="12">
-              <router-link to="/visitorsForm">
-                <div class="myCardlink-not" :style="{background: '#F9C95E'}">访客预约</div>
-              </router-link>
-            </van-col>
-
-            <van-col :span="12">
-              <router-link to="/myReservation">
-                <div class="myCardlink-not" :style="{background: '#2A67FE'}">我的预约</div>
-              </router-link>
-            </van-col>
-          </van-row>
-          <van-row gutter="16" v-if="currentUser.role == '1'" > 
-            <van-col :span="12" >
+          <van-row gutter="16" v-if="currentUser.role == '1' && (currentUser.apply === null || currentUser.apply == 2)"> 
+            <van-col :span="12" v-if="currentUser.role != 0">
               <router-link to="/myVisitors">
                 <div class="myCardlink-not" :style="{background: '#2bc107'}">我的来访</div>
               </router-link>
             </van-col>
 
-            <van-col :span="12" >
+            <van-col :span="12" v-if="currentUser.role != 0">
               <router-link to="/previous">
                 <div class="myCardlink-not" :style="{background: '#ff6034'}">往期来访</div>
+              </router-link>
+            </van-col>
+          </van-row>
+          <van-row gutter="16" v-else>
+            <van-col :span="12"  v-if="currentUser.role != 0">
+              <router-link to="/visitorsForm">
+                <div class="myCardlink-not" :style="{background: '#F9C95E'}">访客预约</div>
+              </router-link>
+            </van-col>
+
+            <van-col :span="12"  v-if="currentUser.role != 0">
+              <router-link to="/myReservation">
+                <div class="myCardlink-not" :style="{background: '#2A67FE'}">我的预约</div>
               </router-link>
             </van-col>
           </van-row>

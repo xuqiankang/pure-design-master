@@ -21,8 +21,8 @@
                 </van-col>
             </van-row>
             <div class="homepage-qr">
-              <div class="homepage-tag" v-if="currentUser.role == '2'">访客</div>
-              <div class="homepage-tag" style="background: #2bc107" v-if="currentUser.role == '1'">公司管理员</div>
+              <div class="homepage-tag" style="background: #2bc107" v-if="currentUser.role == '1' && (currentUser.apply === null || currentUser.apply == 2)">公司管理员</div>
+              <div class="homepage-tag" v-else>访客</div>
               <div class="homepage-tag" style="background: #ee0a24" v-if="currentUser.role == '0'">超级管理员</div>
               <van-image fit="cover" :src="qr" />
             </div>
@@ -34,10 +34,11 @@
          <div style="margin:12px 8px; border-radius: 10px;overflow: hidden;">
             <van-cell to="/personal" icon="label-o" color="#6D7884" title="个人信息" is-link />
             <van-cell to="/password" icon="label-o" color="#2A67FE" title="修改密码" is-link />
-            <van-cell v-if="currentUser.role == 2" :to="currentUser.apply == '1' ? '' : '/authorized'" icon="label-o" color="#F9C95E"  :is-link="currentUser.appay != '1'">
+            <van-cell v-if="currentUser.role == 2 || (currentUser.role == 1 &&  currentUser.apply != 2)" :to="currentUser.apply == '1' ? '' : '/authorized'" icon="label-o" color="#F9C95E"  :is-link="currentUser.appay != '1'">
               <template #title>
                 <span class="custom-title">认证管理员</span>
                 <van-tag type="danger" v-if="currentUser.apply == '1'">审核中</van-tag>
+                <van-tag type="danger" v-if="currentUser.apply == '3'">未通过</van-tag>
               </template>
             </van-cell>
           </div>
@@ -69,7 +70,6 @@ export default {
   },
   created() {
     this.getUser().then(res => {
-      console.log(res);
       res.data.token = getToken('token')
       // res.data.appay = 1
       setSessionToken('currentUser', res.data)

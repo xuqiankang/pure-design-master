@@ -4,7 +4,7 @@
     <van-form @submit="onSubmit">
     <div class="page-container">
       <div class="headerFiex">
-        <van-nav-bar title="预约信息填写" left-arrow @click-left="goBack" />
+        <van-nav-bar title="预约单" left-arrow @click-left="goBack" />
       </div>
       <div class="scroll">
         <div class="addBox_title">

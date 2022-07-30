@@ -1,14 +1,14 @@
 <template>
 <!-- 我的预约 -->
   <div class="myReservation">
-    <van-nav-bar title="信息维护" left-arrow @click-left="goBack" />
+    <van-nav-bar title="用户信息维护" left-arrow @click-left="goBack" />
     <div class="page-container">
       <div class="scroll">
         <div class="listCard-fill" v-if="list && list.length > 0">
           <div class="listCard-fill-content" v-for="(item, index) in list" :key="index"  >
             <div class="listCard-fill-box">
               <van-row type="flex" align="center" style="height: 100%;">
-                <van-col :span="20">
+                <van-col :span="18">
                 <div>
                   用户权限:
                   <van-tag v-if="item.role == 1" type="danger" size="medium" style="margin: 2px 4px">管理员</van-tag>
@@ -19,7 +19,7 @@
                 <div>用户电话: {{ item.phone}}</div>
                 <div>用户公司: {{ item.company}}</div>
                 </van-col>
-                <van-col :span="4">
+                <van-col :span="6">
                   <van-button @click="deleteApplys( item.id)" size="mini" type="danger" round >移除</van-button>
                 </van-col>
               </van-row>
@@ -57,7 +57,7 @@ export default {
         if(res.data instanceof Array) {
           this.$nextTick(() => {
             this.list = [...this.list, ...res.data]
-            this.list = this.list.filter(item => item.id != 1 )
+            this.list = this.list.filter(item => item.role == 2 )
           })
         } else {
           this.showMessage(responseData)
